@@ -41,6 +41,6 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
         
-        cam.transform.SetPositionAndRotation(cam.transform.position, cam.transform.rotation);
+        cam.transform.SetPositionAndRotation(cam.transform.position + new Vector3(velo.x * Time.deltaTime, 0, velo.z * Time.deltaTime), cam.transform.rotation);
     }
 }
