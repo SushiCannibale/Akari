@@ -28,7 +28,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Update()
     {
-
         var velo = rb.velocity;
         velo.x = Input.GetAxis("Horizontal") * speed;
         velo.z = Input.GetAxis("Vertical") * speed;
@@ -39,8 +38,8 @@ public class PlayerBehaviour : MonoBehaviour
             rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
         }
         
-        UpdateCamera();
-        // cam.transform.SetPositionAndRotation(cam.transform.position + new Vector3(velo.x * Time.deltaTime, 0, velo.z * Time.deltaTime), cam.transform.rotation);
+        // UpdateCamera();
+        cam.transform.SetPositionAndRotation(cam.transform.position + new Vector3(velo.x * Time.deltaTime, 0, velo.z * Time.deltaTime), cam.transform.rotation);
     }
 
     private void UpdateCamera()
