@@ -9,7 +9,8 @@ public class PlayerBehaviour : MonoBehaviour
 {
 
     public float speed;
-    public float jumpForce = 5;
+    public float jumpForce;
+    public float friction;
     public Camera cam;
     
     // public float camDist;
@@ -25,22 +26,25 @@ public class PlayerBehaviour : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        // Vector3 camPos = new Vector3((float)(-Math.Sin(phi) * Math.Sin(theta)), (float)(Math.Cos(phi) * Math.Sin(theta)), (float)Math.Sin(theta));
-        // camPos *= camDist;
-        // cam.transform.SetPositionAndRotation(camPos, new Quaternion(0, 0.1f, 0, 1));
-        //rb.velocity = new Vector3(Input.GetAixs("Horizontal"), rb.velocity.y, Input.GetAxis("Vertical")) * speed;
-        
         var velo = rb.velocity;
         velo.x = Input.GetAxis("Horizontal") * speed;
         velo.z = Input.GetAxis("Vertical") * speed;
         rb.velocity = velo;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (-2E-2f < rb.velocity.y && rb.velocity.y < 2E-2 && Input.GetKeyDown(KeyCode.Space))
+        {
             rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+        }
         
+        // UpdateCamera();
         cam.transform.SetPositionAndRotation(cam.transform.position + new Vector3(velo.x * Time.deltaTime, 0, velo.z * Time.deltaTime), cam.transform.rotation);
+    }
+
+    private void UpdateCamera()
+    {
+        Vector3 p = rb.position;
+        cam.transform.SetPositionAndRotation(new Vector3(p.x - 4f, p.y + 4f, p.z - 4f), cam.transform.rotation);
     }
 }
