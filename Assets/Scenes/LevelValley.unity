@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!20 &3011723 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7107791156183872468, guid: 103b168ba79093e4385930e1bc254eb0, type: 3}
+  m_PrefabInstance: {fileID: 7107791154868961931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &10472076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3220,12 +3225,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4532625122036918588, guid: 9229ca021f23bc74a875e72bf73677ff, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 3011723}
+    - target: {fileID: 4532625122036918588, guid: 9229ca021f23bc74a875e72bf73677ff, type: 3}
       propertyPath: speed
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4532625122036918588, guid: 9229ca021f23bc74a875e72bf73677ff, type: 3}
       propertyPath: jumpForce
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4532625122036918588, guid: 9229ca021f23bc74a875e72bf73677ff, type: 3}
       propertyPath: rotationSmoothness
