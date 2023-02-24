@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8766123106153743849}
   m_Layer: 0
   m_Name: default
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 7287417690082553009}
   m_Layer: 0
   m_Name: GP-4Ends
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
