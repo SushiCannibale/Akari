@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LevelSpawn.unity
+    guid: c99e09b876e47564d9701ed6ea66b731
+  - enabled: 1
+    path: Assets/Scenes/LevelValley.unity
+    guid: 76451bdd699e15e4e87edecdfeb1c429
   m_configObjects: {}
