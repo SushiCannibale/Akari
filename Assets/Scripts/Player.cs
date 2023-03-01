@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
-public class PlayerBehaviour : MonoBehaviour
+public class Player : MonoBehaviour
 {
+    public Camera singleCam;
+    public Light singleLight;
 
     public float speed;
     public float jumpForce;
@@ -14,13 +17,14 @@ public class PlayerBehaviour : MonoBehaviour
     public double jumpThreshold;
 
     private bool isGrounded;
+    
+    private static Rigidbody rb;
 
-    public Camera cam;
-
-    private Rigidbody rb;
-
-    void Awake()
+    private void Start()
     {
+        DontDestroyOnLoad(gameObject);
+            
+        // initialize fields
         isGrounded = true;
         rb = GetComponent<Rigidbody>();
     }
@@ -37,7 +41,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Vector3 vel = rb.velocity;
 
-        Transform t = cam.transform;
+        Transform t = singleCam.transform;
         Vector3 forward = t.forward;
         Vector3 side = t.right;
 
@@ -53,5 +57,11 @@ public class PlayerBehaviour : MonoBehaviour
         
         rb.velocity = vel;
 
+        /* Le player fait face au sens de son mouvement */
+        if (vel != Vector3.zero)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(-(forward + side).normalized);
+            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, targetRot, rotationSmoothness * Time.deltaTime);
+        }
     }
 }
