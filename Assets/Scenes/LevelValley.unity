@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4736,7 +4736,6 @@ GameObject:
   - component: {fileID: 884309247}
   - component: {fileID: 884309246}
   - component: {fileID: 884309245}
-  - component: {fileID: 884309244}
   m_Layer: 0
   m_Name: Valley->Dummy
   m_TagString: Untagged
@@ -4744,19 +4743,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &884309244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884309243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eddb01b43d51ab34cb97e32193c00c78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toScene: LevelDummy
 --- !u!114 &884309245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4769,7 +4755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddb01b43d51ab34cb97e32193c00c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toScene: LevelSpawn
+  toScene: LevelDummy
 --- !u!65 &884309246
 BoxCollider:
   m_ObjectHideFlags: 0
