@@ -12,7 +12,6 @@ public class LevelTriggerer : MonoBehaviour
     
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("HEYYYYYY!");
         GameObject gameObject = collider.gameObject;
         
         if (gameObject.CompareTag("Player")) { // Seul le player peut charger une zone
