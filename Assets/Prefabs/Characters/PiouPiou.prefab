@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6856973172499546182}
   - component: {fileID: 8646897648535222540}
   - component: {fileID: 5105474182347038104}
-  - component: {fileID: 4421900289107872842}
+  - component: {fileID: 8095358468103572308}
   m_Layer: 0
   m_Name: default
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4421900289107872842
-BoxCollider:
+--- !u!135 &8095358468103572308
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3125, y: 0.4375, z: 0.4375}
-  m_Center: {x: 0.03125, y: 0.21875, z: 0.03125}
+  m_Radius: 0.2572813
+  m_Center: {x: -0.0072813034, y: 0.21875, z: 0.05}
 --- !u!1 &6634708641302014884
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,8 +159,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309fcd193ee7742479e752c1c66894b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  singleCam: {fileID: 0}
+  singleLight: {fileID: 0}
   speed: 4
   jumpForce: 2
   rotationSmoothness: 0
   jumpThreshold: 0
-  cam: {fileID: 0}
