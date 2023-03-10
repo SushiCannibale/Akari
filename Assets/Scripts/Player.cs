@@ -29,15 +29,15 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void UpdateJump(float yComp)
-    {
-        isGrounded = yComp <= jumpThreshold && yComp >= -jumpThreshold;
-        
-        if (Input.GetButtonDown("Jump") && isGrounded)
-            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
-    }
+    // void UpdateJump(float yComp)
+    // {
+    //     isGrounded = yComp <= jumpThreshold && yComp >= -jumpThreshold;
+    //     
+    //     if (Input.GetButtonDown("Jump")) //&& isGrounded)
+    //         rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+    // }
 
-    void Update()
+    void FixedUpdate()
     {
         Vector3 vel = rb.velocity;
 
@@ -52,16 +52,21 @@ public class Player : MonoBehaviour
         side *= Input.GetAxis("Horizontal") * speed;
         
         vel.x = forward.x + side.x;
-        UpdateJump(vel.y);
         vel.z = forward.z + side.z;
         
         rb.velocity = vel;
-
+        
         /* Le player fait face au sens de son mouvement */
-        if (vel != Vector3.zero)
+        if ((forward + side) != Vector3.zero)
         {
             Quaternion targetRot = Quaternion.LookRotation(-(forward + side).normalized);
             rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, targetRot, rotationSmoothness * Time.deltaTime);
         }
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Jump")) //&& isGrounded)
+            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
     }
 }
