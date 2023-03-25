@@ -23,9 +23,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-            
-        // initialize fields
-        isGrounded = true;
         rb = GetComponent<Rigidbody>();
     }
 
