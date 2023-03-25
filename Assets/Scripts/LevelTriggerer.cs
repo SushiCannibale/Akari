@@ -10,7 +10,7 @@ public class LevelTriggerer : MonoBehaviour
 {
     public string toScene;
     
-    private void OnTriggerEnter(Collider collider)
+    public void OnTriggerEnter(Collider collider)
     {
         GameObject gameObject = collider.gameObject;
         
