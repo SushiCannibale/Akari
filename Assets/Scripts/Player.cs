@@ -1,69 +1,57 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class Player : MonoBehaviour
 {
-    public Camera singleCam;
-    public Light singleLight;
-
+    [SerializeField] private Camera singleCam;
+    [SerializeField] private Light singleLight;
     public float speed;
-    public float jumpForce;
     public float rotationSmoothness;
-    public double jumpThreshold;
+    public float jumpStrength;
+    public float gravity = -9.81f;
 
-    private bool isGrounded;
-    
-    private static Rigidbody rb;
-
+    private CharacterController controller;
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
     }
 
-    // void UpdateJump(float yComp)
-    // {
-    //     isGrounded = yComp <= jumpThreshold && yComp >= -jumpThreshold;
-    //     
-    //     if (Input.GetButtonDown("Jump")) //&& isGrounded)
-    //         rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
-    // }
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        Vector3 vel = rb.velocity;
-
-        Transform t = singleCam.transform;
-        Vector3 forward = t.forward;
-        Vector3 side = t.right;
-
-        forward.Set(forward.x, 0, forward.z);
-        forward *= Input.GetAxis("Vertical") * speed;
+        Transform camT = singleCam.transform;
+        Vector3 fwd = camT.forward;
+        Vector3 side = camT.right;
+        
+        fwd.Set(fwd.x, 0, fwd.z);
+        fwd *= Input.GetAxis("Vertical") * speed;
         
         side.Set(side.x, 0, side.z);
         side *= Input.GetAxis("Horizontal") * speed;
-        
-        vel.x = forward.x + side.x;
-        vel.z = forward.z + side.z;
-        
-        rb.velocity = vel;
-        
-        /* Le player fait face au sens de son mouvement */
-        if ((forward + side) != Vector3.zero)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(-(forward + side).normalized);
-            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, targetRot, rotationSmoothness * Time.deltaTime);
-        }
-    }
 
-    private void Update()
-    {
-        if (Input.GetButtonDown("Jump")) //&& isGrounded)
-            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+        Vector3 direction = fwd + side;
+
+        if (controller.isGrounded)
+        {
+            // direction.y = 0f;
+            // marche pas 
+            if (Input.GetButtonDown("Jump"))
+                direction.y += Mathf.Sqrt(jumpStrength * -0.3f * gravity);
+        }
+
+        // direction.y += gravity * Time.fixedDeltaTime;
+        controller.SimpleMove(direction);
+        
+        /* Le joueur regarde dans la direction de son mouvement */
+        if (direction != Vector3.zero)
+        {
+            Quaternion toRot = Quaternion.LookRotation(-direction, Vector3.up);
+            controller.transform.rotation = Quaternion.RotateTowards(controller.transform.rotation, toRot, rotationSmoothness * Time.fixedDeltaTime);
+        }
     }
 }
