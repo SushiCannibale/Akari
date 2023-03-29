@@ -21,7 +21,7 @@ public class Player : AbstractInterScene
         controller = GetComponent<CharacterController>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         Transform camT = singleCam.transform;
         Vector3 fwd = camT.forward;
