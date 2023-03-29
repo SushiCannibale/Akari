@@ -3,16 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraFollow : AbstractInterScene
 {
     public Transform target;
     public float smoothness = 10.0f;
     public Vector3 offset;
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }
 
     private void LateUpdate()
     {

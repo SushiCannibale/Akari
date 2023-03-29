@@ -6,7 +6,7 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : AbstractInterScene
 {
     [SerializeField] private Camera singleCam;
     [SerializeField] private Light singleLight;
@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
     private CharacterController controller;
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
         controller = GetComponent<CharacterController>();
     }
 
