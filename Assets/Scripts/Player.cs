@@ -16,6 +16,7 @@ public class Player : AbstractInterScene
     public float gravity = -9.81f;
 
     private CharacterController controller;
+    public bool infiniteJump = false;
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -35,15 +36,19 @@ public class Player : AbstractInterScene
 
         Vector3 direction = fwd + side;
 
-        if (controller.isGrounded)
+        if (Input.GetButtonDown("Jump"))
         {
-            // direction.y = 0f;
-            // marche pas 
-            if (Input.GetButtonDown("Jump"))
-                direction.y += Mathf.Sqrt(jumpStrength * -0.3f * gravity);
+            if (controller.isGrounded || infiniteJump)
+            {
+                direction.y += jumpStrength;
+                if (!controller.isGrounded)
+                    Debug.Log("Moon jumped :O");
+                else
+                    Debug.Log("Ground jump :>>>>>>>>");
+            }
         }
 
-        // direction.y += gravity * Time.fixedDeltaTime;
+        direction.y += gravity * Time.deltaTime;
         controller.SimpleMove(direction);
         
         /* Le joueur regarde dans la direction de son mouvement */

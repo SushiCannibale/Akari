@@ -3,12 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventManager : MonoBehaviour
+public class EventManager : AbstractInterScene
 {
-    public static event Action PlayerCheatEvent;
-
-    public static void onCheat()
-    {
-        PlayerCheatEvent?.Invoke();
-    }
+    public static event Action ActivePlayerCheatEvents;
 }

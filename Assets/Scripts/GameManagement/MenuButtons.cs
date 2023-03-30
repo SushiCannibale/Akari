@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,23 @@ public class MenuButtons : AbstractInterScene
 {
     public GameObject pauseMenu;
     public GameObject mainMenu;
+    public GameObject optionsMenu;
     
     private bool pauseGame = true;
     private bool gameStarted = false;
 
-    public void MainPlay()
+    private void Start()
+    {
+        GameUtils.PauseGameState(true);
+    }
+
+    public void Quit()
+    {
+        Application.Quit(0);
+    }
+
+    /* Main menu */
+    public void Play()
     {
         mainMenu.SetActive(false);
         pauseMenu.SetActive(false);
@@ -27,14 +40,17 @@ public class MenuButtons : AbstractInterScene
         }
     }
 
-    public void MainQuit()
+    public void Options()
     {
-        Application.Quit(0);
+        mainMenu.SetActive(false);
+        optionsMenu.SetActive(true);
     }
+
+    /* Pause menu */
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().buildIndex != 0)
+        if (Input.GetKeyDown(KeyCode.Escape) && !SceneManager.GetActiveScene().name.Equals("Bootstrap"))
         {
             if (pauseGame)
                 Resume();
@@ -57,11 +73,12 @@ public class MenuButtons : AbstractInterScene
         pauseGame = true;
     }
 
-    public void Quit()
+    public void MainMenu()
     {
+        optionsMenu.SetActive(false);
         pauseMenu.SetActive(false);
         mainMenu.SetActive(true);
-        GameUtils.PauseGameState(false);
+        GameUtils.PauseGameState(true);
         pauseGame = true;
     }
 }

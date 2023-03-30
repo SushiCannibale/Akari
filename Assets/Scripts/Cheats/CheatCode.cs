@@ -7,11 +7,11 @@ public abstract class CheatCode : MonoBehaviour
 {
     private void Awake()
     {
-        EventManager.PlayerCheatEvent += Activate;
+        EventManager.ActivePlayerCheatEvents += Activate;
     }
 
-    public string Name { get; private set; }
-    public string ResponseText { get; private set; }
+    public string Name { get; protected set; }
+    public string ResponseText { get; protected set; }
 
     public abstract void Activate();
 }
