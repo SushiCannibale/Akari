@@ -1,14 +1,16 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class CheatCodeManager : MonoBehaviour
 {
+    // public static event Action PlayerCheatActivation; 
+    // public static event Action PlayerCheatDesactivation; 
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private TMP_Text responseText;
-    [SerializeField] private List<CheatCode> cheats = new List<CheatCode>();
-
-    public GameObject target;
+    [SerializeField] List<Cheat> Cheats = new List<Cheat>();
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
@@ -19,13 +21,27 @@ public class CheatCodeManager : MonoBehaviour
 
     private void CheckCheat(string text)
     {
-        foreach (CheatCode cheat in cheats)
+        string lower = text.ToLower();
+        // Cheat queried = Cheats.Find(cheat => lower.Equals(cheat.Name) || lower.Equals(cheat.DesacName));
+
+        Cheats.ForEach(cheat =>
         {
-            if (text.ToLower().Equals(cheat.Name))
+            if (!cheat.IsActive && lower.Equals(cheat.Name))
             {
                 cheat.Activate();
-                responseText.text = cheat.ResponseText;
+                StartCoroutine(WriteCheatTextFor(1, cheat.ResponseText));
             }
-        }
+            else if (lower.Equals(cheat.DesacName))
+            {
+                cheat.Desactivate();
+            }
+        });
+    }
+
+    IEnumerator WriteCheatTextFor(float seconds, string text)
+    {
+        responseText.SetText(text);
+        yield return new WaitForSeconds(seconds);
+        responseText.SetText("");
     }
 }

@@ -6,6 +6,7 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class Player : AbstractInterScene
 {
     [SerializeField] private Camera singleCam;
@@ -14,11 +15,33 @@ public class Player : AbstractInterScene
     public float rotationSmoothness;
     public float jumpStrength;
     public float gravity = -9.81f;
+    
+    private float yVel = 0f;
+    private bool canJump = false;
 
     private CharacterController controller;
-    public bool infiniteJump = false;
+
+    // private bool canMove = true;
+    
+    /* Cheats */
+    private bool MoonJump;
+    public bool GetMoonJump() => MoonJump;
+    public void SetMoonJump(bool value) => MoonJump = value;
+
+    private bool NoClip;
+    public bool GetNoclip() => NoClip;
+
+    public void SetNoClip(bool value)
+    {
+        NoClip = value;
+    }
+
+    /* *** */
+
     private void Start()
     {
+        // LevelTriggerer.PlayerEnterZone += PreventMove;
+        // LevelTriggerer.PlayerExitZone += AllowMove;
         controller = GetComponent<CharacterController>();
     }
 
@@ -27,35 +50,73 @@ public class Player : AbstractInterScene
         Transform camT = singleCam.transform;
         Vector3 fwd = camT.forward;
         Vector3 side = camT.right;
-        
-        fwd.Set(fwd.x, 0, fwd.z);
+
         fwd *= Input.GetAxis("Vertical") * speed;
-        
-        side.Set(side.x, 0, side.z);
         side *= Input.GetAxis("Horizontal") * speed;
 
-        Vector3 direction = fwd + side;
+        Vector3 planeDir = fwd + side;
+        planeDir.y = 0;
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (controller.isGrounded || infiniteJump)
-            {
-                direction.y += jumpStrength;
-                if (!controller.isGrounded)
-                    Debug.Log("Moon jumped :O");
-                else
-                    Debug.Log("Ground jump :>>>>>>>>");
-            }
-        }
+        Vector3 yDir = new Vector3(0, 0, 0);
 
-        direction.y += gravity * Time.deltaTime;
-        controller.SimpleMove(direction);
+        MovementUpdate(ref yDir);
+        
+        controller.Move((planeDir + yDir) * Time.deltaTime);
         
         /* Le joueur regarde dans la direction de son mouvement */
-        if (direction != Vector3.zero)
+        if (planeDir != Vector3.zero)
         {
-            Quaternion toRot = Quaternion.LookRotation(-direction, Vector3.up);
+            Quaternion toRot = Quaternion.LookRotation(-planeDir, Vector3.up);
             controller.transform.rotation = Quaternion.RotateTowards(controller.transform.rotation, toRot, rotationSmoothness * Time.fixedDeltaTime);
+        }
+    }
+    
+    /************************************/
+    /* Fonctions appelés par des events */
+    /************************************/
+
+    // private void PreventMove(string zoneTag, string __)
+    // {
+    //     if (zoneTag.Equals("DarkZone"))
+    //         canMove = false;
+    // }
+
+    // private void AllowMove(string zoneTag, string __)
+    // {
+    //     if (zoneTag.Equals("DarkZone"))
+    //         canMove = true;
+    // }
+
+    private void MovementUpdate(ref Vector3 yDir)
+    {
+        if (NoClip)
+        {
+            if (Input.GetButton("Jump"))
+            {
+                yDir.y += speed;
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                yDir.y -= speed;
+            }
+        }
+        else
+        {
+            if (controller.isGrounded)
+            {
+                yVel = 0;
+                canJump = true;
+            }
+
+            if (Input.GetButtonDown("Jump") && (canJump || MoonJump))
+            {
+                yVel += jumpStrength;
+                canJump = false;
+            }
+        
+            yVel += gravity * Time.deltaTime;
+            yDir.y += yVel;
         }
     }
 }
