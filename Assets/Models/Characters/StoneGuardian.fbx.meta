@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: d8a800dbc85ac854fa6bb969fe7e2903
+guid: 2301aec60ebbc0244a7b0261e41a8c15
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: stone_guardian.png
-    second: {fileID: 2100000, guid: 029241e55b52e2946932cfbc3a0319d0, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

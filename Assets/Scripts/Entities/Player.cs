@@ -7,13 +7,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class Player : AbstractInterScene
+public class Player : LivingEntity
 {
     [SerializeField] private Camera singleCam;
     [SerializeField] private Light singleLight;
-    public float speed;
     public float rotationSmoothness;
     public float jumpStrength;
+    public float speed;
     public float gravity = -9.81f;
     
     private float yVel = 0f;
@@ -38,21 +38,26 @@ public class Player : AbstractInterScene
 
     /* *** */
 
-    private void Start()
+    protected void Awake()
     {
-        // LevelTriggerer.PlayerEnterZone += PreventMove;
-        // LevelTriggerer.PlayerExitZone += AllowMove;
+        DontDestroyOnLoad(this);
+        Speed = speed;
         controller = GetComponent<CharacterController>();
     }
 
-    private void Update()
+    public override void Attack(LivingEntity livingEntity)
+    {
+        livingEntity.Hurt(BaseDamage);
+    }
+
+    protected override void Update()
     {
         Transform camT = singleCam.transform;
         Vector3 fwd = camT.forward;
         Vector3 side = camT.right;
 
-        fwd *= Input.GetAxis("Vertical") * speed;
-        side *= Input.GetAxis("Horizontal") * speed;
+        fwd *= Input.GetAxis("Vertical") * Speed;
+        side *= Input.GetAxis("Horizontal") * Speed;
 
         Vector3 planeDir = fwd + side;
         planeDir.y = 0;
@@ -86,6 +91,8 @@ public class Player : AbstractInterScene
     //     if (zoneTag.Equals("DarkZone"))
     //         canMove = true;
     // }
+    
+    /* *** */
 
     private void MovementUpdate(ref Vector3 yDir)
     {
@@ -93,12 +100,12 @@ public class Player : AbstractInterScene
         {
             if (Input.GetButton("Jump"))
             {
-                yDir.y += speed;
+                yDir.y += Speed;
             }
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                yDir.y -= speed;
+                yDir.y -= Speed;
             }
         }
         else

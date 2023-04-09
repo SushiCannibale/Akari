@@ -9,11 +9,6 @@ public abstract class Cheat : MonoBehaviour
     public string Name { get; protected set; }
     public string DesacName { get; protected set; }
     public string ResponseText { get; protected set; }
-    protected virtual void Awake()
-    {
-        // CheatCodeManager.PlayerCheatActivation += Activate;
-        // CheatCodeManager.PlayerCheatDesactivation += Desactivate;
-    }
 
     public virtual void Activate() => IsActive = true;
 

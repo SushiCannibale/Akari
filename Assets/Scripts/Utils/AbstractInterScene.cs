@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class AbstractInterScene : MonoBehaviour
 {
-    private void Awake()
+    protected virtual void Awake()
     {
         DontDestroyOnLoad(this);
     }

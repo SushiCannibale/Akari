@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class DarkZoneTransition : MonoBehaviour
@@ -22,7 +23,6 @@ public class DarkZoneTransition : MonoBehaviour
             StartCoroutine(MakeTransition(waitTime, scene));
         else
             LevelLoader.LoadScene(scene);
-
     }
 
     // public void onExitZone(string zoneTag, string scene)
