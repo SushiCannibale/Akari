@@ -1,25 +1,36 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class LivingEntity : MonoBehaviour
 {
-    protected Transform Position;
-    
-    public float MaxHealth { get; }
+    public float MaxHealth { get; set; }
     public float Health { get; protected set; }
     public float Speed { get; protected set; }
     public float BaseDamage { get; protected set; }
 
-    private void Awake()
+    public virtual void Initialize(float maxHealth, float speed, float baseDamage)
     {
-        Position = GetComponent<Transform>();
+        MaxHealth = maxHealth;
+        Health = maxHealth;
+        Speed = speed;
+        BaseDamage = baseDamage;
     }
 
     public bool IsAlive() => Health > 0;
 
-    public abstract void Attack(LivingEntity livingEntity);
-
-    public void Hurt(float amount) => Health -= amount;
-
-    protected abstract void Update();
+    // public IEnumerator SwitchColor(MeshRenderer[] renderers, Color color, float seconds)
+    // {
+    //     Color[] defaults = new Color[renderers.Length];
+    //     for (int i = 0; i < renderers.Length; i++)
+    //     {
+    //         defaults[i] = renderers[i].material.color;
+    //         renderers[i].material.color = color;
+    //     }
+    //         
+    //     yield return new WaitForSeconds(seconds);
+    //     
+    //     for (int i = 0; i < renderers.Length; i++)
+    //         renderers[i].material.color = defaults[i];
+    // }
 }

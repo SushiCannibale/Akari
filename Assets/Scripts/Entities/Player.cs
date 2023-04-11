@@ -1,19 +1,20 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
 public class Player : LivingEntity
 {
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float baseDamage;
+    [SerializeField] private float speed;
+    
+    public Transform hitPoint;
+    public float hitRange = 0.5f;
+    public LayerMask hitLayer;
+    
     [SerializeField] private Camera singleCam;
     [SerializeField] private Light singleLight;
     public float rotationSmoothness;
     public float jumpStrength;
-    public float speed;
     public float gravity = -9.81f;
     
     private float yVel = 0f;
@@ -41,16 +42,16 @@ public class Player : LivingEntity
     protected void Awake()
     {
         DontDestroyOnLoad(this);
-        Speed = speed;
+        Initialize(maxHealth, speed, baseDamage);
         controller = GetComponent<CharacterController>();
     }
 
-    public override void Attack(LivingEntity livingEntity)
-    {
-        livingEntity.Hurt(BaseDamage);
-    }
+    // public void Attack(LivingEntity livingEntity)
+    // {
+    //     livingEntity.Hurt(BaseDamage);
+    // }
 
-    protected override void Update()
+    protected void Update()
     {
         Transform camT = singleCam.transform;
         Vector3 fwd = camT.forward;
@@ -65,6 +66,7 @@ public class Player : LivingEntity
         Vector3 yDir = new Vector3(0, 0, 0);
 
         MovementUpdate(ref yDir);
+        AttackUpdate();
         
         controller.Move((planeDir + yDir) * Time.deltaTime);
         
@@ -75,24 +77,6 @@ public class Player : LivingEntity
             controller.transform.rotation = Quaternion.RotateTowards(controller.transform.rotation, toRot, rotationSmoothness * Time.fixedDeltaTime);
         }
     }
-    
-    /************************************/
-    /* Fonctions appelés par des events */
-    /************************************/
-
-    // private void PreventMove(string zoneTag, string __)
-    // {
-    //     if (zoneTag.Equals("DarkZone"))
-    //         canMove = false;
-    // }
-
-    // private void AllowMove(string zoneTag, string __)
-    // {
-    //     if (zoneTag.Equals("DarkZone"))
-    //         canMove = true;
-    // }
-    
-    /* *** */
 
     private void MovementUpdate(ref Vector3 yDir)
     {
@@ -125,5 +109,26 @@ public class Player : LivingEntity
             yVel += gravity * Time.deltaTime;
             yDir.y += yVel;
         }
+    }
+
+    private void AttackUpdate()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Collider[] hits = Physics.OverlapSphere(hitPoint.position, hitRange, hitLayer);
+
+            foreach (Collider coll in hits)
+            {
+                if (coll.gameObject.TryGetComponent<IDamageable>(out IDamageable hitable))
+                {
+                    hitable.Hurt(BaseDamage);
+                }
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawSphere(hitPoint.position, hitRange);
     }
 }
