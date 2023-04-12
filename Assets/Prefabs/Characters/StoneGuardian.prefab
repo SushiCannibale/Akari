@@ -1772,6 +1772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3401558176951679289}
   - component: {fileID: 4870556681216152162}
+  - component: {fileID: 6008339914602754619}
   m_Layer: 0
   m_Name: leftarm
   m_TagString: Untagged
@@ -1810,6 +1811,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.47100174, y: 1.218462, z: 0.5195737}
   m_Center: {x: 0.26449913, y: -0.46874, z: -0.0493443}
+--- !u!114 &6008339914602754619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650539464718440400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b9db1d794a46f5906320113aa2f8da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2687209480793135939
 GameObject:
   m_ObjectHideFlags: 0
@@ -3030,8 +3043,7 @@ GameObject:
   - component: {fileID: 3747462638820513074}
   - component: {fileID: 5974909911080184871}
   - component: {fileID: -5598673342859000144}
-  - component: {fileID: -8878642275061692120}
-  - component: {fileID: -2195698556171688889}
+  - component: {fileID: 8302866886745124496}
   m_Layer: 0
   m_Name: StoneGuardian
   m_TagString: Untagged
@@ -3094,7 +3106,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &-8878642275061692120
+--- !u!114 &8302866886745124496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3103,25 +3115,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4560591467621486472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec7dadbe54884929ae228b93543349ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f1a7662b72210b4c8d03092ec4654e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  attackSpeed: 0
-  isAttacking: 0
---- !u!114 &-2195698556171688889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4560591467621486472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe266c7220724d5ab7ddae8471b9df84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossFight: {fileID: 0}
+  minTrackingDist: 0
+  maxTrackingDist: 20
 --- !u!1 &4673667933307062924
 GameObject:
   m_ObjectHideFlags: 0
@@ -4425,6 +4423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7341988757673015185}
   - component: {fileID: 3825566614833280114}
+  - component: {fileID: 1746926224231374077}
   m_Layer: 0
   m_Name: rightarm
   m_TagString: Untagged
@@ -4463,6 +4462,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4685179, y: 1.2534237, z: 0.44958878}
   m_Center: {x: 0.26574105, y: -0.45071673, z: 0.049723625}
+--- !u!114 &1746926224231374077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106187550969898345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b9db1d794a46f5906320113aa2f8da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6138514659422054086
 GameObject:
   m_ObjectHideFlags: 0
