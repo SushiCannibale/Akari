@@ -10,6 +10,7 @@ public class BossTriggerer : MonoBehaviour
         if (other.TryGetComponent<Player>(out Player player))
         {
             boss.StartFight(player);
+            Destroy(gameObject);
         }
     }
 }

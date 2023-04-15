@@ -1,50 +1,31 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class StoneGuardian : Boss
 {
-    /* Finite State Machine */
-    private StoneGuardianBaseState currentState;
+    /* Liste des noms des attaques dans l'animator */
+    [SerializeField] private List<string> attacks;
+    private Animator animator;
     
-    public StoneGuardianAwakingState AwakingState = new StoneGuardianAwakingState();
-    public StoneGuardianIdleState IdleState = new StoneGuardianIdleState(2.0f, 10.0f);
-    public StoneGuardianAttackingState AttackingState = new StoneGuardianAttackingState(15.0f);
-    public StoneGuardianVulnerableState VulnerableState = new StoneGuardianVulnerableState(5.0f, 10.0f);
-    /*          ***         */
-
-    public Animator Animator { get; private set; }
-    
-    [SerializeField] private float minTrackingDist;
-    [SerializeField] private float maxTrackingDist;
-
-    public GuardianCore Core { get; }
-
-    private void Awake()
+    private void Start()
     {
-        Initialize(100.0f, 10.0f, 5.0f);
-        Animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
+        Initialize(100.0f, 5.0f, 2.0f);
     }
-    
-    /* Call quand le joueur entre dans la zone de trigger */
+
     public override void StartFight(Player player)
     {
         Target = player;
-        currentState = AwakingState;
-        currentState.Start(this);
+        animator.SetTrigger("Awake");
     }
-    
-    void Update()
+
+    public string ChooseNextAttack()
     {
-        if (currentState == null) // combat pas encore commencé
-            return;
-        
-        currentState.Update(this);
-    }
- 
-    public void ChangeState(StoneGuardianBaseState nextState)
-    {
-        currentState.End(this);
-        currentState = nextState;
-        currentState.Start(this);
+        int i = Mathf.RoundToInt(Random.Range(0f, 100f) / 100f);
+        return attacks[i];
     }
 
     public void Hurt(float amount)

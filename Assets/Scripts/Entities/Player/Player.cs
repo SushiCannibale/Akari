@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Player : LivingEntity
+public class Player : LivingEntity, IDamageable
 {
     [SerializeField] private float maxHealth;
     [SerializeField] private float baseDamage;
@@ -13,6 +13,7 @@ public class Player : LivingEntity
     
     [SerializeField] private Camera singleCam;
     [SerializeField] private Light singleLight;
+    
     public float rotationSmoothness;
     public float jumpStrength;
     public float gravity = -9.81f;
@@ -42,6 +43,7 @@ public class Player : LivingEntity
     protected void Awake()
     {
         DontDestroyOnLoad(this);
+        DontDestroyOnLoad(singleLight);
         Initialize(maxHealth, speed, baseDamage);
         controller = GetComponent<CharacterController>();
     }
@@ -130,5 +132,17 @@ public class Player : LivingEntity
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawSphere(hitPoint.position, hitRange);
+    }
+
+    public void Hurt(float amount)
+    {
+        Health -= amount;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // TODO
+        // enemy layer, alors <Hurt> 
+        // if (other.gameObject.layer == )
     }
 }

@@ -9,7 +9,7 @@ public abstract class LivingEntity : MonoBehaviour
     public float Speed { get; protected set; }
     public float BaseDamage { get; protected set; }
 
-    public virtual void Initialize(float maxHealth, float speed, float baseDamage)
+    public void Initialize(float maxHealth, float speed, float baseDamage)
     {
         MaxHealth = maxHealth;
         Health = maxHealth;
