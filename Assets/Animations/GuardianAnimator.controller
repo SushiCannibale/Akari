@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minRng: 0
   maxRng: 5
-  maxWait: 10
+  maxWait: 8
   minAttackDist: 0
   maxAttackDist: 2
 --- !u!1101 &-3975669233644596769

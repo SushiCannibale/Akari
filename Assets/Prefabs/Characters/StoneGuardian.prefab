@@ -552,7 +552,7 @@ MonoBehaviour:
   attacks:
   - SimpleAttack
   - Shockwave_in
-  blinkTimes: 1
+  blinkTimes: 5
   blinkInterval: 0.1
   IsVulnerable: 0
   maxInvulnerableTime: 2
