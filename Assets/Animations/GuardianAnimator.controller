@@ -98,7 +98,7 @@ MonoBehaviour:
   maxRng: 5
   maxWait: 15
   minAttackDist: 0
-  maxAttackDist: 3
+  maxAttackDist: 2
 --- !u!1101 &-3975669233644596769
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -158,10 +158,10 @@ AnimatorStateMachine:
     m_Position: {x: 140, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7184095960126635117}
-    m_Position: {x: 250, y: 150, z: 0}
+    m_Position: {x: 230, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8077859514755983876}
-    m_Position: {x: 600, y: 150, z: 0}
+    m_Position: {x: 570, y: 150, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

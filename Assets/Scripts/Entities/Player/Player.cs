@@ -69,7 +69,7 @@ public class Player : LivingEntity, IDamageable
 
         MovementUpdate(ref yDir);
         AttackUpdate();
-        
+
         controller.Move((planeDir + yDir) * Time.deltaTime);
         
         /* Le joueur regarde dans la direction de son mouvement */
@@ -128,7 +128,7 @@ public class Player : LivingEntity, IDamageable
             }
         }
     }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawSphere(hitPoint.position, hitRange);

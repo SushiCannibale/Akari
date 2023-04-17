@@ -41,16 +41,20 @@ public class GuardianIdleState : StateMachineBehaviour
     /* Probablement le saint graal, et je déconne même pô :O */
     public override void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Transform gTrans = guardian.transform;
+        Vector3 gPos = gTrans.position;
+        Vector3 pPos = guardian.Target.transform.position;
+        Vector3 finalPos = new Vector3(pPos.x, gPos.y, pPos.z); // on garde la hauteur du guardian !
+
+        gTrans.LookAt(finalPos);
+        gTrans.Rotate(0f, 180.0f, 0f);
+        
         if (shouldAttack)
+        {
             return;
+        }
         
-        Debug.Log(stateInfo.normalizedTime + "   |   " + "Move Called !");
-            
-        Vector3 dir = guardian.Target.transform.position - guardian.transform.position;
-        dir.y = 0;
-        dir.Normalize();
-        guardian.transform.position += dir * Time.deltaTime;
-        
+        guardian.transform.position = Vector3.Lerp(gPos, finalPos, Vector3.Distance(gPos, pPos) / 6 * guardian.Speed * Time.deltaTime);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

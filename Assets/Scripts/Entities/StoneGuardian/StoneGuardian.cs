@@ -7,13 +7,21 @@ using Random = UnityEngine.Random;
 public class StoneGuardian : Boss
 {
     /* Liste des noms des attaques dans l'animator */
+    [SerializeField] private float speed;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float damage;
+    
     [SerializeField] private List<string> attacks;
     private Animator animator;
+
+    public bool IsVulnerable;
+    public float maxInvulnerableTime;
     
     private void Start()
     {
         animator = GetComponent<Animator>();
-        Initialize(100.0f, 5.0f, 2.0f);
+        IsVulnerable = false;
+        Initialize(maxHealth, speed, damage);
     }
 
     public override void StartFight(Player player)
@@ -30,6 +38,24 @@ public class StoneGuardian : Boss
 
     public void Hurt(float amount)
     {
-        Health -= amount;
+        if (IsVulnerable)
+        {
+            StartCoroutine(TriggerInvulnerability(maxInvulnerableTime));
+            Health -= amount;
+        }
+    }
+
+    IEnumerator TriggerInvulnerability(float seconds)
+    {
+        float time = 0;
+        IsVulnerable = false;
+
+        while (time < seconds)
+        {
+            time += Time.deltaTime;
+            yield return -1;
+        }
+
+        IsVulnerable = true;
     }
 }

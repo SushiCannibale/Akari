@@ -7,10 +7,14 @@ public class GuardianShockwaveState : StateMachineBehaviour
     [SerializeField] private string shockwaveOut;
     [SerializeField] private float maxTimeVulnerable;
     private float time;
+
+    private StoneGuardian guardian;
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        guardian = animator.GetComponent<StoneGuardian>();
+        guardian.IsVulnerable = true;
         time = 0f;
     }
 
@@ -28,6 +32,6 @@ public class GuardianShockwaveState : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        guardian.IsVulnerable = false;
     }
 }
