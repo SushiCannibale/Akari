@@ -546,14 +546,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94a10f515848534aa9341ccb1283b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  maxHealth: 50
+  speed: 2
+  maxHealth: 10
   damage: 2
   attacks:
   - SimpleAttack
   - Shockwave_in
+  blinkTimes: 1
+  blinkInterval: 0.1
   IsVulnerable: 0
-  maxInvulnerableTime: 1
+  maxInvulnerableTime: 2
 --- !u!1 &801068213988166603
 GameObject:
   m_ObjectHideFlags: 0
@@ -3241,8 +3243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ef85cefb884423b772532625c5a924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blinkMaterial: {fileID: 2100000, guid: 96cf1ebf0c22c6b42af957b3cfccc52a, type: 2}
-  blinkInterval: 0.1
 --- !u!65 &4831838400799824008
 BoxCollider:
   m_ObjectHideFlags: 0

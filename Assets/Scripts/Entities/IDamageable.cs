@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IDamageable
 {
     void Hurt(float amount);
+
+    void Kill();
 }

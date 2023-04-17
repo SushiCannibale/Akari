@@ -137,6 +137,13 @@ public class Player : LivingEntity, IDamageable
     public void Hurt(float amount)
     {
         Health -= amount;
+        if (Health <= 0)
+            Kill();
+    }
+
+    public void Kill()
+    {
+        // Save + Menu de fin
     }
 
     private void OnTriggerEnter(Collider other)

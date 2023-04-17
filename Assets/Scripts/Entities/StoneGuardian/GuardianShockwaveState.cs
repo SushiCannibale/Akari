@@ -21,8 +21,10 @@ public class GuardianShockwaveState : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Debug.Log(time);
         if (time >= maxTimeVulnerable)
         {
+            guardian.IsVulnerable = false;
             animator.SetTrigger(shockwaveOut);
             return;
         }
@@ -32,6 +34,6 @@ public class GuardianShockwaveState : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        guardian.IsVulnerable = false;
+        
     }
 }
