@@ -11,16 +11,15 @@ using Object = UnityEngine.Object;
 
 public class LevelTriggerer : MonoBehaviour
 {
-    public string toScene;
+    [SerializeField] private string toScene;
     public static event Action<string, string> PlayerEnterZone;
 
     public void OnTriggerEnter(Collider other)
     {
-        GameObject obj = other.gameObject;
-        
-        if (obj.CompareTag("Player")) 
+        if (other.TryGetComponent<Player>(out Player player)) 
         {
-            PlayerEnterZone?.Invoke(gameObject.tag, toScene);
+            LevelLoader.LoadScene(toScene);
+            // PlayerEnterZone?.Invoke(gameObject.tag, toScene);
         }
     }
 }

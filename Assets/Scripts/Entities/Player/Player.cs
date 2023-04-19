@@ -7,12 +7,12 @@ public class Player : LivingEntity, IDamageable
     [SerializeField] private float baseDamage;
     [SerializeField] private float speed;
     
-    public Transform hitPoint;
+    public Vector3 hitOffset;
     public float hitRange = 0.5f;
     public LayerMask hitLayer;
     
-    [SerializeField] private Camera singleCam;
-    [SerializeField] private Light singleLight;
+    private PlayerCamera cam;
+    private PlayerLight light;
     
     public float rotationSmoothness;
     public float jumpStrength;
@@ -33,20 +33,19 @@ public class Player : LivingEntity, IDamageable
     private bool NoClip;
     public bool GetNoclip() => NoClip;
 
-    public void SetNoClip(bool value)
-    {
-        NoClip = value;
-    }
+    public void SetNoClip(bool value) => NoClip = value;
 
     /* *** */
 
     protected void Awake()
     {
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(singleLight);
         Initialize(maxHealth, speed, baseDamage);
         controller = GetComponent<CharacterController>();
     }
+
+    public void SetCamera(PlayerCamera camera) => cam = camera;
+    public void SetLight(PlayerLight pLight) => light = pLight;
 
     // public void Attack(LivingEntity livingEntity)
     // {
@@ -55,7 +54,7 @@ public class Player : LivingEntity, IDamageable
 
     protected void Update()
     {
-        Transform camT = singleCam.transform;
+        Transform camT = cam.transform;
         Vector3 fwd = camT.forward;
         Vector3 side = camT.right;
 
@@ -117,21 +116,21 @@ public class Player : LivingEntity, IDamageable
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Collider[] hits = Physics.OverlapSphere(hitPoint.position, hitRange, hitLayer);
-
+            Collider[] hits = Physics.OverlapSphere(transform.position + hitOffset, hitRange, hitLayer);
+        
             foreach (Collider coll in hits)
             {
                 if (coll.gameObject.TryGetComponent<IDamageable>(out IDamageable hitable))
                 {
-                    hitable.Hurt(BaseDamage);
+                    hitable.Hurt(BaseDamage); // * damage modifier de l'arme
                 }
             }
         }
     }
-    
+
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawSphere(hitPoint.position, hitRange);
+        Gizmos.DrawSphere(transform.position + hitOffset, hitRange);
     }
 
     public void Hurt(float amount)

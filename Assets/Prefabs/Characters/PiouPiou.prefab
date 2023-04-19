@@ -163,16 +163,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309fcd193ee7742479e752c1c66894b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: {fileID: 5130119807488969162}
-  hitRange: 0.5
+  maxHealth: 20
+  baseDamage: 1
+  speed: 4
+  hitOffset: {x: 0.5, y: 0, z: 0}
+  hitRange: 1
   hitLayer:
     serializedVersion: 2
     m_Bits: 8
-  singleCam: {fileID: 0}
-  singleLight: {fileID: 0}
   rotationSmoothness: 720
   jumpStrength: 4
-  speed: 4
   gravity: -9.81
 --- !u!143 &1182529426102544758
 CharacterController:

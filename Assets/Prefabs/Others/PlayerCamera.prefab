@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7107791156183872469}
   - component: {fileID: 7107791156183872470}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,4 +99,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   smoothness: 10
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: -5, y: 6, z: -5}

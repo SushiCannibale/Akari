@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Bootstrap.unity
     guid: 3d907dcb5d3872248947f477f1719207
   - enabled: 1
+    path: Assets/Scenes/MainTitle.unity
+    guid: 4e59fd714d93130409fd05c52e432cef
+  - enabled: 1
     path: Assets/Scenes/LevelSpawn.unity
     guid: c99e09b876e47564d9701ed6ea66b731
   - enabled: 1
