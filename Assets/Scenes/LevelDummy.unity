@@ -13077,5 +13077,9 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DarkZone
       objectReference: {fileID: 0}
+    - target: {fileID: 163481674007539454, guid: 93b95094eec59864d8d90bdf211fc277, type: 3}
+      propertyPath: toScene
+      value: Meadow1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b95094eec59864d8d90bdf211fc277, type: 3}

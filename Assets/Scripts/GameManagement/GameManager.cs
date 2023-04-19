@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player playerPrefab;
     [SerializeField] private PlayerCamera playerCamPrefab;
     [SerializeField] private PlayerLight playerLightPrefab;
-    
     [SerializeField] private Canvas gameUIPrefab;
 
     [SerializeField] private string gameSceneName;
@@ -24,8 +23,8 @@ public class GameManager : MonoBehaviour
     
     public Player Player { get; set; }
     public PlayerCamera PlayerCamera { get; set; }
-    
     public PlayerLight PlayerLight { get; set; }
+    public Canvas Canvas { get; private set; }
 
     void Awake()
     {
@@ -51,6 +50,8 @@ public class GameManager : MonoBehaviour
         Player = Instantiate(playerPrefab);
         PlayerCamera = Instantiate(playerCamPrefab).GetComponent<PlayerCamera>();
         PlayerLight = Instantiate(playerLightPrefab).GetComponent<PlayerLight>();
+        Canvas = Instantiate(gameUIPrefab);
+        DontDestroyOnLoad(Canvas); // A bouger dans un script à part, j'aime pas voir ça là
         
         Player.SetCamera(PlayerCamera);
         PlayerCamera.SetTarget(Player.transform);
@@ -71,5 +72,12 @@ public class GameManager : MonoBehaviour
         IsPlaying = true;
         IsPaused = false;
         // TODO : Charger la save
+    }
+
+    public void Annihilate(Predicate<GameObject> p)
+    {
+        foreach(GameObject gameobject in SceneManager.GetActiveScene().GetRootGameObjects().Where(go => p(go)))
+            Destroy(gameobject);
+
     }
 }

@@ -11,6 +11,7 @@ public class CheatCodeManager : MonoBehaviour
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private TMP_Text responseText;
     [SerializeField] List<Cheat> Cheats = new List<Cheat>();
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))

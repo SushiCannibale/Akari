@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -156,7 +156,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 1182529426102544757, guid: 4789e4578abc6d049b27170f1b979300, type: 3}
   playerCamPrefab: {fileID: 7107791156183872470, guid: 103b168ba79093e4385930e1bc254eb0, type: 3}
   playerLightPrefab: {fileID: -4122510851402361958, guid: bf08b7afae1aa56469426ca3051225be, type: 3}
-  gameUIPrefab: {fileID: 0}
+  gameUIPrefab: {fileID: 3254578369707365760, guid: 25215b72d71f2514194b8752f3d043d1, type: 3}
   gameSceneName: LevelSpawn
   firstScene: MainTitle
 --- !u!4 &975959199
