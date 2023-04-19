@@ -8,8 +8,7 @@ using Object = UnityEngine.Object;
 
 public class LevelLoader
 {
-    public static void LoadScene(string scene)
-    {
-        SceneManager.LoadScene(scene);
-    }
+    
+
+    
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -7,7 +8,10 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            Pause(!GameManager.Instance.IsPaused);
+            if (GameManager.Instance.IsPaused)
+                Pause(false);
+            else
+                Pause(true);
         }
     }
 
@@ -22,6 +26,6 @@ public class PauseMenu : MonoBehaviour
     public void MainTitle()
     {
         GameManager.Instance.Annihilate(g => g.name != "GameManager");
-        LevelLoader.LoadScene(GameUtils.Scenes.MainTitle);
+        SceneManager.LoadScene(GameUtils.Scenes.MainTitle);
     }
 }

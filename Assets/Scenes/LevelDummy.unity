@@ -13075,7 +13075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 163481674007539453, guid: 93b95094eec59864d8d90bdf211fc277, type: 3}
       propertyPath: m_TagString
-      value: DarkZone
+      value: AnimatedPortal
       objectReference: {fileID: 0}
     - target: {fileID: 163481674007539454, guid: 93b95094eec59864d8d90bdf211fc277, type: 3}
       propertyPath: toScene
@@ -13083,3 +13083,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b95094eec59864d8d90bdf211fc277, type: 3}
+--- !u!1 &163481674332676661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 163481674007539453, guid: 93b95094eec59864d8d90bdf211fc277, type: 3}
+  m_PrefabInstance: {fileID: 163481674332676660}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &163481674332676662
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163481674332676661}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 213fcd0eaad8b084ea994cb2354b53b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

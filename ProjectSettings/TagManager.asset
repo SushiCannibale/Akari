@@ -5,9 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - DarkZone
   - Damageable
   - Enemy
+  - AnimatedPortal
   layers:
   - Default
   - TransparentFX

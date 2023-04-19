@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
             IsPlaying = false;
             IsPaused = false;
             
-            LevelLoader.LoadScene(firstScene);
+            SceneManager.LoadScene(firstScene);
         } 
         else
             throw new ApplicationException("Il y a plus d'un GameManager dans le jeu");
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
-        LevelLoader.LoadScene(gameSceneName);
+        SceneManager.LoadScene(gameSceneName);
         Player = Instantiate(playerPrefab);
         PlayerCamera = Instantiate(playerCamPrefab).GetComponent<PlayerCamera>();
         PlayerLight = Instantiate(playerLightPrefab).GetComponent<PlayerLight>();
