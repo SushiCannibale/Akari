@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public abstract class MenuBase : MonoBehaviour
 {
@@ -16,5 +17,11 @@ public abstract class MenuBase : MonoBehaviour
     {
         gameObject.SetActive(false);
         previousMenu.gameObject.SetActive(true);
+    }
+
+    protected virtual void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Back();
     }
 }

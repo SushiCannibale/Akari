@@ -7,6 +7,6 @@ public class GameUtils
     public static class Scenes {
         public static string Bootstrap = "Bootstrap";
         public static string MainTitle = "MainTitle";
-        public static string DontDestroyOnLoad = "DontDestroyOnLoad";
+        public static string BossRush = "BossRush";
     }
 }

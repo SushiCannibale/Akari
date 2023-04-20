@@ -4,14 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject holder;
     public void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameManager.Instance.IsPaused)
-                Pause(false);
-            else
-                Pause(true);
+            Pause(!GameManager.Instance.IsPaused);
         }
     }
 
@@ -20,6 +18,7 @@ public class PauseMenu : MonoBehaviour
     {
         GameManager.Instance.Pause(flag);
         GameUtils.PauseGameState(flag);
+        holder.SetActive(flag);
     }
 
     /* Bind à un bouton */

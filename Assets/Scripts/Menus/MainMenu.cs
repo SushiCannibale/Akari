@@ -12,4 +12,6 @@ public class MainMenu : MenuBase
 
     public void Play() => NextMenu(playMenu);
     public void Options() => NextMenu(optionsMenu);
+
+    protected override void Update() { }
 }
