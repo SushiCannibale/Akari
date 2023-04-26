@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class LivingEntity : MonoBehaviour
+public abstract class AbstractLivingEntity : MonoBehaviour
 {
     public float MaxHealth { get; set; }
     public float Health { get; protected set; }

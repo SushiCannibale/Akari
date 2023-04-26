@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class BossTriggerer : MonoBehaviour
 {
-    [SerializeField] private Boss boss;
+    [SerializeField] private AbstractBoss boss;
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Player>(out Player player))

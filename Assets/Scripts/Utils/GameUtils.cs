@@ -9,4 +9,9 @@ public class GameUtils
         public static string MainTitle = "MainTitle";
         public static string BossRush = "BossRush";
     }
+
+    public static class Keys
+    {
+        public static KeyCode INTERACT = KeyCode.E;
+    }
 }

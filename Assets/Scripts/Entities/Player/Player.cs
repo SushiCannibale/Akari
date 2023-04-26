@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Player : LivingEntity, IDamageable
+public class Player : AbstractLivingEntity, IDamageable
 {
     [SerializeField] private float maxHealth;
     [SerializeField] private float baseDamage;

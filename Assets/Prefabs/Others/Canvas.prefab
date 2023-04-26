@@ -2319,6 +2319,7 @@ GameObject:
   - component: {fileID: 3254578369707365760}
   - component: {fileID: 5839289480068216118}
   - component: {fileID: 6438282901105414481}
+  - component: {fileID: 1749725951562536732}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2411,6 +2412,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1749725951562536732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4290561135894865288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 889e9bb2010647f28bd6b6304adf261f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4426242105288200892
 GameObject:
   m_ObjectHideFlags: 0
@@ -2702,7 +2715,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4882374523515216997}
   - component: {fileID: 1252300422023471482}
-  - component: {fileID: 1326713527236446173}
   m_Layer: 5
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -2751,18 +2763,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &1326713527236446173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4900554350202643942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada0994cf55d4742808fcddb383e4b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4954403079520721595
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player playerPrefab;
     [SerializeField] private PlayerCamera playerCamPrefab;
     [SerializeField] private PlayerLight playerLightPrefab;
-    [SerializeField] private Canvas gameUIPrefab;
+    [SerializeField] private GameCanvas gameUIPrefab;
+    [SerializeField] private DialogueManager dialogueManagerPrefab;
 
     [SerializeField] private string gameSceneName;
     [SerializeField] private string firstScene;
@@ -24,7 +25,10 @@ public class GameManager : MonoBehaviour
     public Player Player { get; set; }
     public PlayerCamera PlayerCamera { get; set; }
     public PlayerLight PlayerLight { get; set; }
-    public Canvas Canvas { get; private set; }
+    public GameCanvas Canvas { get; private set; }
+    
+    
+    public DialogueManager DialogueManager { get; set; }
 
     void Awake()
     {
@@ -39,7 +43,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(firstScene);
         } 
         else
-            throw new ApplicationException("Il y a plus d'un GameManager dans le jeu");
+            throw new ApplicationException("Il y a plus d'un <GameManager> !");
     }
 
     public void Pause(bool f) => IsPaused = f;
@@ -47,11 +51,13 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         SceneManager.LoadScene(gameSceneName);
+
+        DialogueManager = Instantiate(dialogueManagerPrefab);
+        
         Player = Instantiate(playerPrefab);
         PlayerCamera = Instantiate(playerCamPrefab).GetComponent<PlayerCamera>();
         PlayerLight = Instantiate(playerLightPrefab).GetComponent<PlayerLight>();
         Canvas = Instantiate(gameUIPrefab);
-        DontDestroyOnLoad(Canvas); // A bouger dans un script à part, j'aime pas voir ça là
         
         Player.SetCamera(PlayerCamera);
         PlayerCamera.SetTarget(Player.transform);
@@ -78,6 +84,5 @@ public class GameManager : MonoBehaviour
     {
         foreach(GameObject gameobject in SceneManager.GetActiveScene().GetRootGameObjects().Where(go => p(go)))
             Destroy(gameobject);
-
     }
 }

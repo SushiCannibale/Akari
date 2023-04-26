@@ -156,7 +156,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 1182529426102544757, guid: 4789e4578abc6d049b27170f1b979300, type: 3}
   playerCamPrefab: {fileID: 7107791156183872470, guid: 103b168ba79093e4385930e1bc254eb0, type: 3}
   playerLightPrefab: {fileID: -4122510851402361958, guid: bf08b7afae1aa56469426ca3051225be, type: 3}
-  gameUIPrefab: {fileID: 3254578369707365760, guid: 25215b72d71f2514194b8752f3d043d1, type: 3}
+  gameUIPrefab: {fileID: 1749725951562536732, guid: 25215b72d71f2514194b8752f3d043d1, type: 3}
+  dialogueManagerPrefab: {fileID: 271151803452964651, guid: 7f0329ceabe76e54f8e9d6126607d8be, type: 3}
   gameSceneName: LevelSpawn
   firstScene: MainTitle
 --- !u!4 &975959199

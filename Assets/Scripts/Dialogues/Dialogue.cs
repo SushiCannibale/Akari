@@ -7,6 +7,7 @@ using UnityEngine;
 public class Dialogue
 {
     /* Une string = Une boîte de texte */
-    private List<string> Lines;
+    [TextArea(3, 10)]
+    [SerializeField] private List<string> Lines;
     public List<string> GetLines() => Lines;
 }

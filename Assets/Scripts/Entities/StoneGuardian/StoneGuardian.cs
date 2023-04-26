@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class StoneGuardian : Boss
+public class StoneGuardian : AbstractBoss
 {
     /* Liste des noms des attaques dans l'animator */
     [SerializeField] private float speed;
