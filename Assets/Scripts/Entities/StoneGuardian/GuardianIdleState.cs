@@ -19,6 +19,7 @@ public class GuardianIdleState : StateMachineBehaviour
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         guardian = animator.GetComponentInParent<StoneGuardian>();
+        guardian.ActivateDamageCollider(false);
         time = Random.Range(minRng, maxRng);
     }
 
@@ -30,7 +31,9 @@ public class GuardianIdleState : StateMachineBehaviour
         
         if (time >= maxWait && shouldAttack)
         {
+            guardian.ActivateDamageCollider(true);
             animator.SetTrigger(guardian.ChooseNextAttack());
+            time = 0f;
             return;
             
         }

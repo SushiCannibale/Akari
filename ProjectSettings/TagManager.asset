@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - AnimatedPortal
   - Interactible
+  - DamageProvider
   layers:
   - Default
   - TransparentFX

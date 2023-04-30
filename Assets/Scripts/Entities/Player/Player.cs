@@ -1,7 +1,8 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : AbstractLivingEntity, IDamageable
+public class Player : AbstractLivingEntity
 {
     [SerializeField] private float maxHealth;
     [SerializeField] private float baseDamage;
@@ -40,7 +41,7 @@ public class Player : AbstractLivingEntity, IDamageable
     protected void Awake()
     {
         DontDestroyOnLoad(this);
-        Initialize(maxHealth, speed, baseDamage);
+        Initialize(maxHealth, speed, baseDamage, true);
         controller = GetComponent<CharacterController>();
     }
 
@@ -67,7 +68,7 @@ public class Player : AbstractLivingEntity, IDamageable
         Vector3 yDir = new Vector3(0, 0, 0);
 
         MovementUpdate(ref yDir);
-        AttackUpdate();
+        Attack();
 
         controller.Move((planeDir + yDir) * Time.deltaTime);
         
@@ -112,7 +113,7 @@ public class Player : AbstractLivingEntity, IDamageable
         }
     }
 
-    private void AttackUpdate()
+    private void Attack()
     {
         if (Input.GetButtonDown("Fire1"))
         {
@@ -120,35 +121,29 @@ public class Player : AbstractLivingEntity, IDamageable
         
             foreach (Collider coll in hits)
             {
-                if (coll.gameObject.TryGetComponent<IDamageable>(out IDamageable hitable))
+                if (coll.gameObject.TryGetComponent(out IDamageable hitable))
                 {
-                    hitable.Hurt(BaseDamage); // * damage modifier de l'arme
+                    hitable.Hurt(BaseDamage);
                 }
             }
         }
     }
 
-    private void OnDrawGizmosSelected()
+    public override void Kill()
     {
-        Gizmos.DrawSphere(transform.position + hitOffset, hitRange);
-    }
-
-    public void Hurt(float amount)
-    {
-        Health -= amount;
-        if (Health <= 0)
-            Kill();
-    }
-
-    public void Kill()
-    {
-        // Save + Menu de fin
+        Debug.Log("Dead :OOOO");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // TODO
-        // enemy layer, alors <Hurt> 
-        // if (other.gameObject.layer == )
+        if (other.CompareTag("DamageProvider"))
+        {
+            AbstractLivingEntity damager = other.GetComponentInParent<AbstractLivingEntity>();
+            if (damager.IsAttacking)
+            {
+                Hurt(damager.BaseDamage);
+                Debug.Log(Health);
+            }
+        }
     }
 }
