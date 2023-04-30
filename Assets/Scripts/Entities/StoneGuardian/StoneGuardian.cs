@@ -37,5 +37,9 @@ public class StoneGuardian : AbstractBoss
 
     public void ActivateDamageCollider(bool f) => IsAttacking = f;
 
-    public override void Kill() => animator.SetTrigger(deathTrigger);
+    public override void Kill()
+    {
+        IsVulnerable = false;
+        animator.SetTrigger(deathTrigger);
+    }
 }

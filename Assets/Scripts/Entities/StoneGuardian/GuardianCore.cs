@@ -6,5 +6,9 @@ public class GuardianCore : MonoBehaviour, IDamageable
 {
     private StoneGuardian guardian;
     private void Awake() => guardian = GetComponentInParent<StoneGuardian>();
-    public void Hurt(float amount) => guardian.Hurt(amount);
+    public void Hurt(float amount)
+    {
+        if (guardian.IsVulnerable)
+            guardian.Hurt(amount);
+    }
 }
