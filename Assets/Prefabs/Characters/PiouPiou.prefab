@@ -125,8 +125,6 @@ GameObject:
   - component: {fileID: 1182529426102544765}
   - component: {fileID: 1182529426102544757}
   - component: {fileID: 1182529426102544758}
-  - component: {fileID: 1182529426102544754}
-  - component: {fileID: 1182529426102544759}
   m_Layer: 0
   m_Name: PiouPiou
   m_TagString: Player
@@ -195,27 +193,3 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.22, z: 0}
---- !u!114 &1182529426102544754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5130119808083251500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e51d627e125252e458ff5068448dffe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1182529426102544759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5130119808083251500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 883c9b1159984b1ebb4efdc0559b64f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -2,20 +2,14 @@
 using UnityEngine;
 
 /* Script qui se charge d'envoyer le dialogue du PNJ au DialogueManager */
-[RequireComponent(typeof(AbstractEntityDialogue))]
 public class DialogueTriggerer : MonoBehaviour
 {
-    private Dialogue dialogue;
-    private void Awake() => dialogue = GetComponent<Dialogue>();
-
-    private void OnTriggerStay(Collider other)
+    [SerializeField] private Dialogue dialogue;
+    public void TriggerDialogue()
     {
-        if (!other.CompareTag("Player"))
-            return;
-
-        if (Input.GetKeyDown(GameUtils.Keys.INTERACT))
-        {
+        if (!dialogue.HasStarted)
             DialogueManager.Instance.StartDialogue(dialogue);
-        }
+        else
+            DialogueManager.Instance.NextSentence(dialogue);
     }
 }

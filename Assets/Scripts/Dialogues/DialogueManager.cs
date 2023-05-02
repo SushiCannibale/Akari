@@ -2,17 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /* Singleton qui gère le dialogue courant avec quiconque.
  Le dialogue est récupéré par le DialogueTriggerer du gameobject à qui on parle. */
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+    private Text textBox;
+    
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            // TODO : Get the Text Component from the Canvas
             DontDestroyOnLoad(Instance);
         }
         else
@@ -24,11 +28,28 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        Debug.Log("Dialogue commencé !");
-        // Sentences.Clear();
-        // foreach (string sentence in dialogue.GetLines()) 
-        //     Sentences.Enqueue(sentence);
+        dialogue.HasStarted = true;
+        Sentences.Clear();
+        foreach (string sentence in dialogue.GetLines()) 
+            Sentences.Enqueue(sentence);
+        
+        NextSentence(dialogue);
     }
-    
-    // public void StopDialogue() { }
+
+    public void NextSentence(Dialogue dialogue)
+    {
+        if (Sentences.Count == 0)
+        {
+            StopDialogue(dialogue);
+            return;
+        }
+
+        string sentence = Sentences.Dequeue();
+        textBox.text = sentence;
+    }
+
+    public void StopDialogue(Dialogue dialogue)
+    {
+        dialogue.HasStarted = false;
+    }
 }

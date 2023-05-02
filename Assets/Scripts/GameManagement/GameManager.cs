@@ -22,13 +22,11 @@ public class GameManager : MonoBehaviour
     public bool IsPlaying { get; private set; }
     public bool IsPaused { get; private set; }
     
-    public Player Player { get; set; }
-    public PlayerCamera PlayerCamera { get; set; }
-    public PlayerLight PlayerLight { get; set; }
+    public Player Player { get; private set; }
+    public PlayerCamera PlayerCamera { get; private set; }
+    public PlayerLight PlayerLight { get; private set; }
     public GameCanvas Canvas { get; private set; }
-    
-    
-    public DialogueManager DialogueManager { get; set; }
+    public DialogueManager DialogueManager { get; private set; }
 
     void Awake()
     {
@@ -59,7 +57,6 @@ public class GameManager : MonoBehaviour
         PlayerLight = Instantiate(playerLightPrefab).GetComponent<PlayerLight>();
         Canvas = Instantiate(gameUIPrefab);
         
-        Player.SetCamera(PlayerCamera);
         PlayerCamera.SetTarget(Player.transform);
         PlayerLight.SetOwner(Player);
         

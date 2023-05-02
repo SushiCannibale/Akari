@@ -11,10 +11,7 @@ public class Player : AbstractLivingEntity
     public Vector3 hitOffset;
     public float hitRange = 0.5f;
     public LayerMask hitLayer;
-    
-    private PlayerCamera cam;
-    private PlayerLight light;
-    
+
     public float rotationSmoothness;
     public float jumpStrength;
     public float gravity = -9.81f;
@@ -23,20 +20,22 @@ public class Player : AbstractLivingEntity
     private bool canJump = false;
 
     private CharacterController controller;
+    
+    private GameObject TriggerWith { get; set; }
 
     // private bool canMove = true;
     
-    /* Cheats */
-    private bool MoonJump;
-    public bool GetMoonJump() => MoonJump;
-    public void SetMoonJump(bool value) => MoonJump = value;
-
-    private bool NoClip;
-    public bool GetNoclip() => NoClip;
-
-    public void SetNoClip(bool value) => NoClip = value;
-
-    /* *** */
+    // /* Cheats */
+    // private bool MoonJump;
+    // public bool GetMoonJump() => MoonJump;
+    // public void SetMoonJump(bool value) => MoonJump = value;
+    //
+    // private bool NoClip;
+    // public bool GetNoclip() => NoClip;
+    //
+    // public void SetNoClip(bool value) => NoClip = value;
+    //
+    // /* *** */
 
     protected void Awake()
     {
@@ -45,9 +44,6 @@ public class Player : AbstractLivingEntity
         controller = GetComponent<CharacterController>();
     }
 
-    public void SetCamera(PlayerCamera camera) => cam = camera;
-    public void SetLight(PlayerLight pLight) => light = pLight;
-
     // public void Attack(LivingEntity livingEntity)
     // {
     //     livingEntity.Hurt(BaseDamage);
@@ -55,7 +51,7 @@ public class Player : AbstractLivingEntity
 
     protected void Update()
     {
-        Transform camT = cam.transform;
+        Transform camT = GameManager.Instance.PlayerCamera.transform;
         Vector3 fwd = camT.forward;
         Vector3 side = camT.right;
 
@@ -66,9 +62,14 @@ public class Player : AbstractLivingEntity
         planeDir.y = 0;
 
         Vector3 yDir = new Vector3(0, 0, 0);
-
-        MovementUpdate(ref yDir);
-        Attack();
+        
+        if (Input.GetButtonDown("Fire1"))
+            HandleAttack();
+        
+        HandleMove(ref yDir);
+        
+        if (Input.GetKeyDown(GameUtils.Keys.INTERACT))
+            HandleInteraction();
 
         controller.Move((planeDir + yDir) * Time.deltaTime);
         
@@ -80,70 +81,73 @@ public class Player : AbstractLivingEntity
         }
     }
 
-    private void MovementUpdate(ref Vector3 yDir)
+    private void HandleMove(ref Vector3 yDir)
     {
-        if (NoClip)
+        if (controller.isGrounded)
         {
-            if (Input.GetButton("Jump"))
-            {
-                yDir.y += Speed;
-            }
-
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                yDir.y -= Speed;
-            }
+            yVel = 0;
+            canJump = true;
         }
-        else
-        {
-            if (controller.isGrounded)
-            {
-                yVel = 0;
-                canJump = true;
-            }
-
-            if (Input.GetButtonDown("Jump") && (canJump || MoonJump))
-            {
-                yVel += jumpStrength;
-                canJump = false;
-            }
         
-            yVel += gravity * Time.deltaTime;
-            yDir.y += yVel;
+        if (Input.GetButtonDown("Jump") && canJump)
+        {
+            yVel += jumpStrength;
+            canJump = false;
         }
+        
+        yVel += gravity * Time.deltaTime;
+        yDir.y += yVel;
     }
 
-    private void Attack()
+    private void HandleAttack()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Collider[] hits = Physics.OverlapSphere(transform.position + hitOffset, hitRange, hitLayer);
+        Collider[] hits = Physics.OverlapSphere(transform.position + hitOffset, hitRange, hitLayer);
         
-            foreach (Collider coll in hits)
+        foreach (Collider coll in hits)
+        {
+            if (coll.gameObject.TryGetComponent(out IDamageable hitable))
             {
-                if (coll.gameObject.TryGetComponent(out IDamageable hitable))
-                {
-                    hitable.Hurt(BaseDamage);
-                }
+                hitable.Hurt(BaseDamage);
             }
         }
     }
 
-    public override void Kill()
+    private void HandleInteraction()
     {
-        Debug.Log("Dead :OOOO");
+        if (TriggerWith is null)
+            return;
+        
+        if (TriggerWith.CompareTag("DialogueTriggerer"))
+        {
+            TriggerWith.GetComponent<DialogueTriggerer>().TriggerDialogue();
+        }
     }
+
+    public override void Kill() { }
+
+    
+    /* Event's Related */
 
     private void OnTriggerEnter(Collider other)
     {
+        TriggerWith = other.gameObject;
+        
         if (other.CompareTag("DamageProvider"))
-        {
-            AbstractLivingEntity damager = other.GetComponentInParent<AbstractLivingEntity>();
-            if (damager.IsAttacking)
-            {
-                Hurt(damager.BaseDamage);
-                Debug.Log(Health);
-            }
-        }
+            HandleDamage(other);
     }
+
+    private void HandleDamage(Collider other)
+    {
+        AbstractLivingEntity damager = other.GetComponentInParent<AbstractLivingEntity>();
+        
+        if (damager.IsAttacking)
+            Hurt(damager.BaseDamage);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        TriggerWith = null;
+    }
+    
+    /* ***************** */
 }

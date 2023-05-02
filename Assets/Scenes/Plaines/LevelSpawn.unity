@@ -10662,7 +10662,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 163481674007539448, guid: 93b95094eec59864d8d90bdf211fc277, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 163481674007539448, guid: 93b95094eec59864d8d90bdf211fc277, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16495,6 +16495,95 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3259838030685817229, guid: 994a8237b693b7f4e9bd757d86e9d901, type: 3}
   m_PrefabInstance: {fileID: 2145940709}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2647147076426619454
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.411
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640827658039280565, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129838286596806927, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: m_Name
+      value: StoryTellerV3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 26d5315d22987374c953215800cca815, type: 3}
+--- !u!1 &4121421061478564657 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2129838286596806927, guid: 26d5315d22987374c953215800cca815, type: 3}
+  m_PrefabInstance: {fileID: 2647147076426619454}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4121421061478564658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121421061478564657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0481be5569fda248a096a4c6842d2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    Lines:
+    - 'Il est ecrit : seul link peuv vaincre ganon'
+--- !u!114 &4121421061478564659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121421061478564657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0171babb98447e2b2230e99e7c9ffc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7823183279587197366
 PrefabInstance:
   m_ObjectHideFlags: 0

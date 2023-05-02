@@ -10,6 +10,7 @@ TagManager:
   - AnimatedPortal
   - Interactible
   - DamageProvider
+  - DialogueTriggerer
   layers:
   - Default
   - TransparentFX

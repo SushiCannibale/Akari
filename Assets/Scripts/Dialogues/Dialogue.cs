@@ -10,4 +10,6 @@ public class Dialogue
     [TextArea(3, 10)]
     [SerializeField] private List<string> Lines;
     public List<string> GetLines() => Lines;
+    
+    public bool HasStarted { get; set; }
 }
