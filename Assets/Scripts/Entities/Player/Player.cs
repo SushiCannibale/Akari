@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : AbstractLivingEntity
-{
+{ 
     [SerializeField] private float maxHealth;
     [SerializeField] private float baseDamage;
     [SerializeField] private float speed;
@@ -23,31 +23,18 @@ public class Player : AbstractLivingEntity
     
     private GameObject TriggerWith { get; set; }
 
-    // private bool canMove = true;
-    
-    // /* Cheats */
-    // private bool MoonJump;
-    // public bool GetMoonJump() => MoonJump;
-    // public void SetMoonJump(bool value) => MoonJump = value;
-    //
-    // private bool NoClip;
-    // public bool GetNoclip() => NoClip;
-    //
-    // public void SetNoClip(bool value) => NoClip = value;
-    //
-    // /* *** */
-
+    public static Player Instance;
     protected void Awake()
     {
-        DontDestroyOnLoad(this);
-        Initialize(maxHealth, speed, baseDamage, true);
-        controller = GetComponent<CharacterController>();
+        if (Instance is null)
+        {
+            DontDestroyOnLoad(this);
+            Initialize(maxHealth, speed, baseDamage, true);
+            controller = GetComponent<CharacterController>();
+        }
+        else
+            throw new ApplicationException("There are more than one <Player>");
     }
-
-    // public void Attack(LivingEntity livingEntity)
-    // {
-    //     livingEntity.Hurt(BaseDamage);
-    // }
 
     protected void Update()
     {

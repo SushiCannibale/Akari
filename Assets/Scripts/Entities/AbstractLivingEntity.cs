@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class AbstractLivingEntity : MonoBehaviour
 {
-    [SerializeField] private float maxInvulnerableTime;
-    [SerializeField] private float blinkInterval;
-    [SerializeField] private int blinkTimes;
+    [SerializeField] protected float maxInvulnerableTime;
+    [SerializeField] protected float blinkInterval;
+    [SerializeField] protected int blinkTimes;
     
     public float MaxHealth { get; set; }
     public float Health { get; protected set; }

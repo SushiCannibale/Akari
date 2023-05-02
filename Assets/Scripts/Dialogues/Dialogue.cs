@@ -12,4 +12,6 @@ public class Dialogue
     public List<string> GetLines() => Lines;
     
     public bool HasStarted { get; set; }
+    
+    public AudioSource Voice { get; set; }
 }
