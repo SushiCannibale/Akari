@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player playerPrefab;
     [SerializeField] private PlayerCamera playerCamPrefab;
     [SerializeField] private PlayerLight playerLightPrefab;
-    [SerializeField] private GameCanvas gameUIPrefab;
-    [SerializeField] private DialogueManager dialogueManagerPrefab;
 
     [SerializeField] private string gameSceneName;
     [SerializeField] private string firstScene;
@@ -25,12 +23,9 @@ public class GameManager : MonoBehaviour
     public Player Player { get; private set; }
     public PlayerCamera PlayerCamera { get; private set; }
     public PlayerLight PlayerLight { get; private set; }
-    public GameCanvas Canvas { get; private set; }
-    public DialogueManager DialogueManager { get; private set; }
-
     void Awake()
     {
-        if (Instance == null)
+        if (Instance is null)
         {
             Instance = this;
             DontDestroyOnLoad(Instance);
@@ -50,12 +45,9 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(gameSceneName);
 
-        DialogueManager = Instantiate(dialogueManagerPrefab);
-        
         Player = Instantiate(playerPrefab);
         PlayerCamera = Instantiate(playerCamPrefab).GetComponent<PlayerCamera>();
         PlayerLight = Instantiate(playerLightPrefab).GetComponent<PlayerLight>();
-        Canvas = Instantiate(gameUIPrefab);
         
         PlayerCamera.SetTarget(Player.transform);
         PlayerLight.SetOwner(Player);

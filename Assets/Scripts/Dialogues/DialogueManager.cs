@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +10,15 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
-    private Text textBox;
+    [SerializeField] private float waitWithinLetter;
+    [SerializeField] private TMP_Text textBox;
+    [SerializeField] private Animator dialogueBox;
     
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            // TODO : Get the Text Component from the Canvas
             DontDestroyOnLoad(Instance);
         }
         else
@@ -29,6 +31,8 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         dialogue.HasStarted = true;
+        dialogueBox.SetTrigger("In");
+        
         Sentences.Clear();
         foreach (string sentence in dialogue.GetLines()) 
             Sentences.Enqueue(sentence);
@@ -43,13 +47,24 @@ public class DialogueManager : MonoBehaviour
             StopDialogue(dialogue);
             return;
         }
-
-        string sentence = Sentences.Dequeue();
-        textBox.text = sentence;
+        
+        StopAllCoroutines();
+        StartCoroutine(TextAnimation(Sentences.Dequeue(), waitWithinLetter));
     }
 
     public void StopDialogue(Dialogue dialogue)
     {
         dialogue.HasStarted = false;
+        dialogueBox.SetTrigger("Out");
+    }
+    
+    IEnumerator TextAnimation(string sentence, float waitInSec)
+    {
+        textBox.text = "";
+        foreach (char c in sentence)
+        {
+            textBox.text += c;
+            yield return new WaitForSeconds(waitInSec);
+        }
     }
 }

@@ -25,7 +25,7 @@ public class LevelTriggerer : MonoBehaviour
     
     public void LoadSceneAnimated(string scene)
     {
-        Animator animator = GameManager.Instance.Canvas.GetComponentInChildren<DarkZoneTransition>().GetComponent<Animator>();
+        Animator animator = Canvas.Instance.GetComponentInChildren<DarkZoneTransition>().GetComponent<Animator>();
         StartCoroutine(PlayAnimation(scene, animator, 1f));
     }
     
