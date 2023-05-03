@@ -11,7 +11,7 @@ public class Dialogue
     [SerializeField] private List<string> Lines;
     public List<string> GetLines() => Lines;
     
-    public bool HasStarted { get; set; }
+    public bool IsActive { get; set; }
     
     public AudioSource Voice { get; set; }
 }

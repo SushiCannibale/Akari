@@ -16,12 +16,13 @@ public class Player : AbstractLivingEntity
     public float jumpStrength;
     public float gravity = -9.81f;
     
-    private float yVel = 0f;
-    private bool canJump = false;
+    private float yVel;
+    private bool canJump;
 
     private CharacterController controller;
     
-    private GameObject TriggerWith { get; set; }
+    private Dialogue CurrentDialogue { get; set; }
+    private GameObject WithinBoundsOf { get; set; }
 
     public static Player Instance;
     protected void Awake()
@@ -38,6 +39,8 @@ public class Player : AbstractLivingEntity
 
     protected void Update()
     {
+        // CanMove = CurrentDialogue != null && !CurrentDialogue.IsActive;
+        
         Transform camT = GameManager.Instance.PlayerCamera.transform;
         Vector3 fwd = camT.forward;
         Vector3 side = camT.right;
@@ -58,13 +61,16 @@ public class Player : AbstractLivingEntity
         if (Input.GetKeyDown(GameUtils.Keys.INTERACT))
             HandleInteraction();
 
-        controller.Move((planeDir + yDir) * Time.deltaTime);
-        
-        /* Le joueur regarde dans la direction de son mouvement */
-        if (planeDir != Vector3.zero)
+        if (CanMove)
         {
-            Quaternion toRot = Quaternion.LookRotation(-planeDir, Vector3.up);
-            controller.transform.rotation = Quaternion.RotateTowards(controller.transform.rotation, toRot, rotationSmoothness * Time.fixedDeltaTime);
+            controller.Move((planeDir + yDir) * Time.deltaTime);
+        
+            /* Le joueur regarde dans la direction de son mouvement */
+            if (planeDir != Vector3.zero)
+            {
+                Quaternion toRot = Quaternion.LookRotation(-planeDir, Vector3.up);
+                controller.transform.rotation = Quaternion.RotateTowards(controller.transform.rotation, toRot, rotationSmoothness * Time.fixedDeltaTime);
+            }
         }
     }
 
@@ -101,12 +107,14 @@ public class Player : AbstractLivingEntity
 
     private void HandleInteraction()
     {
-        if (TriggerWith is null)
+        if (WithinBoundsOf is null)
             return;
         
-        if (TriggerWith.CompareTag("DialogueTriggerer"))
+        if (WithinBoundsOf.CompareTag("DialogueTriggerer"))
         {
-            TriggerWith.GetComponent<DialogueTriggerer>().TriggerDialogue();
+            DialogueTriggerer dialogueTriggerer = WithinBoundsOf.GetComponent<DialogueTriggerer>();
+            CurrentDialogue = dialogueTriggerer.Dialogue;
+            dialogueTriggerer.TriggerDialogue();
         }
     }
 
@@ -117,7 +125,7 @@ public class Player : AbstractLivingEntity
 
     private void OnTriggerEnter(Collider other)
     {
-        TriggerWith = other.gameObject;
+        WithinBoundsOf = other.gameObject;
         
         if (other.CompareTag("DamageProvider"))
             HandleDamage(other);
@@ -133,8 +141,13 @@ public class Player : AbstractLivingEntity
 
     private void OnTriggerExit(Collider other)
     {
-        TriggerWith = null;
+        if (WithinBoundsOf.CompareTag("DialogueTriggerer"))
+        {
+            DialogueTriggerer dialogueTriggerer = WithinBoundsOf.GetComponent<DialogueTriggerer>();
+            dialogueTriggerer.StopDialogue();
+            CurrentDialogue = null;
+        }
     }
-    
+
     /* ***************** */
 }

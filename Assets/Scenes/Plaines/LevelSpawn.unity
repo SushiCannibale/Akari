@@ -16551,8 +16551,28 @@ PrefabInstance:
       value: StoryTellerV3
       objectReference: {fileID: 0}
     - target: {fileID: 7921718969955354405, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: Dialogue.Lines.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921718969955354405, guid: 26d5315d22987374c953215800cca815, type: 3}
       propertyPath: dialogue.Lines.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921718969955354405, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: Dialogue.Lines.Array.data[0]
+      value: Zelda
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921718969955354405, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: Dialogue.Lines.Array.data[1]
+      value: "Le duc d'Onkled est attaqu\xE9 par les forces du mal de Ganon"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921718969955354405, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: Dialogue.Lines.Array.data[2]
+      value: Je pars pour Gamelon pour l'aider.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921718969955354405, guid: 26d5315d22987374c953215800cca815, type: 3}
+      propertyPath: Dialogue.Lines.Array.data[3]
+      value: "Si dans un mois je n'ai pas donn\xE9 signe de vie, envoie Link."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26d5315d22987374c953215800cca815, type: 3}

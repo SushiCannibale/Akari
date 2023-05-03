@@ -14,6 +14,8 @@ public abstract class AbstractLivingEntity : MonoBehaviour
     public float BaseDamage { get; protected set; }
     public bool IsAttacking { get; protected set; }
     public bool IsVulnerable { get; set; }
+    
+    public bool CanMove { get; set; }
 
     public void Initialize(float maxHealth, float speed, float baseDamage, bool vulnerable)
     {
@@ -22,6 +24,7 @@ public abstract class AbstractLivingEntity : MonoBehaviour
         Speed = speed;
         BaseDamage = baseDamage;
         IsVulnerable = vulnerable;
+        CanMove = true;
     }
 
     public bool IsAlive() => Health > 0;

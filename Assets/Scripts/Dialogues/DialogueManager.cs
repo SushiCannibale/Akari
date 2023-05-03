@@ -30,7 +30,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        dialogue.HasStarted = true;
+        dialogue.IsActive = true;
         dialogueBox.SetTrigger("In");
         
         Sentences.Clear();
@@ -54,7 +54,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StopDialogue(Dialogue dialogue)
     {
-        dialogue.HasStarted = false;
+        dialogue.IsActive = false;
         dialogueBox.SetTrigger("Out");
     }
     
