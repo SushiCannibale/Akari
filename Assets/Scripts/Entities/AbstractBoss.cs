@@ -7,7 +7,10 @@ public abstract class AbstractBoss : AbstractLivingEntity
     public Player Target { get; protected set; }
 
     /* Appelée par ce qui va lancer le combat (cf. AbstractBossTriggerer.cs) */
-    public abstract void StartFight(Player player);
+    public virtual void StartFight(Player player)
+    {
+        
+    }
 
     public Player FindNearestPlayer(float minDist, float maxDist)
     {

@@ -2,21 +2,13 @@
 using UnityEngine;
 
 /* Script qui se charge d'envoyer le dialogue du PNJ au DialogueManager */
-public class DialogueTriggerer : MonoBehaviour
+public class DialogueTriggerer : MonoBehaviour, IInteractible
 {
     public Dialogue Dialogue;
-    [SerializeField] private AudioSource voice;
-
-    private void Awake() => voice = GetComponent<AudioSource>();
-
-    public void TriggerDialogue()
+    // public void TriggerDialogue() => DialogueManager.Instance.TriggerDialogue(Dialogue);
+    // public void StopDialogue() => DialogueManager.Instance.StopCurrentDialogue();
+    public void Interact(Player interactor)
     {
-        Dialogue.Voice = voice;
-        if (!Dialogue.IsActive)
-            DialogueManager.Instance.StartDialogue(Dialogue);
-        else
-            DialogueManager.Instance.NextSentence(Dialogue);
+        DialogueManager.Instance.Trigger(Dialogue, interactor);
     }
-
-    public void StopDialogue() => DialogueManager.Instance.StopDialogue(Dialogue);
 }

@@ -481,15 +481,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0171babb98447e2b2230e99e7c9ffc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    Lines:
-    - Il est ecrit...
-    - Seul link peut vaincre ganon !
-    - Zelda.
-    - "Le duc d'Onkled est attaqu\xE9 par les forces du mal de Ganon."
-    - Je pars pour Gamelon pour l'aider
-    - "Si dans un mois je n'ai pas donn\xE9 signe de vie"
-    - Envoie Link.
+  Dialogue:
+    Lines: []
+  voice: {fileID: 0}
 --- !u!65 &2483885671418670221
 BoxCollider:
   m_ObjectHideFlags: 0

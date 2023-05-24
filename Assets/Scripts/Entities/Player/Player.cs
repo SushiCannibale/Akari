@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : AbstractLivingEntity
 { 
@@ -20,27 +24,26 @@ public class Player : AbstractLivingEntity
     private bool canJump;
 
     private CharacterController controller;
+    private Sword sword;
     
-    private Dialogue CurrentDialogue { get; set; }
-    private GameObject WithinBoundsOf { get; set; }
-
-    public static Player Instance;
+    private List<GameObject> withinBounds;
     protected void Awake()
     {
-        if (Instance is null)
-        {
-            DontDestroyOnLoad(this);
-            Initialize(maxHealth, speed, baseDamage, true);
-            controller = GetComponent<CharacterController>();
-        }
-        else
-            throw new ApplicationException("There are more than one <Player>");
+        DontDestroyOnLoad(this);
+        Initialize(maxHealth, speed, baseDamage, true);
+        controller = GetComponent<CharacterController>();
+    }
+
+    private void Start()
+    {
+        sword = GetComponentInChildren<Sword>();
+        withinBounds = new List<GameObject>();
     }
 
     protected void Update()
     {
         // CanMove = CurrentDialogue != null && !CurrentDialogue.IsActive;
-        
+
         Transform camT = GameManager.Instance.PlayerCamera.transform;
         Vector3 fwd = camT.forward;
         Vector3 side = camT.right;
@@ -57,9 +60,13 @@ public class Player : AbstractLivingEntity
             HandleAttack();
         
         HandleMove(ref yDir);
-        
+
         if (Input.GetKeyDown(GameUtils.Keys.INTERACT))
-            HandleInteraction();
+        {
+            if (withinBounds.Count == 0)
+                return;
+            Interact(GameUtils.Math.CloserTo(withinBounds, gameObject));
+        }
 
         if (CanMove)
         {
@@ -94,6 +101,7 @@ public class Player : AbstractLivingEntity
 
     private void HandleAttack()
     {
+        sword.Swing();
         Collider[] hits = Physics.OverlapSphere(transform.position + hitOffset, hitRange, hitLayer);
         
         foreach (Collider coll in hits)
@@ -105,48 +113,43 @@ public class Player : AbstractLivingEntity
         }
     }
 
-    private void HandleInteraction()
+    private void Interact(GameObject gameObject)
     {
-        if (WithinBoundsOf is null)
-            return;
-        
-        if (WithinBoundsOf.CompareTag("DialogueTriggerer"))
-        {
-            DialogueTriggerer dialogueTriggerer = WithinBoundsOf.GetComponent<DialogueTriggerer>();
-            CurrentDialogue = dialogueTriggerer.Dialogue;
-            dialogueTriggerer.TriggerDialogue();
-        }
+        if (gameObject.TryGetComponent(out IInteractible clickable))
+            clickable.Interact(this);
     }
 
-    public override void Kill() { }
+    public override void Kill()
+    {
+        SceneManager.LoadScene(GameUtils.Scenes.MainTitle);
+        transform.position = new Vector3(-1, 1, 4);
+    }
 
     
     /* Event's Related */
 
     private void OnTriggerEnter(Collider other)
     {
-        WithinBoundsOf = other.gameObject;
-        
-        if (other.CompareTag("DamageProvider"))
-            HandleDamage(other);
-    }
+        withinBounds.Add(other.gameObject);
 
-    private void HandleDamage(Collider other)
-    {
-        AbstractLivingEntity damager = other.GetComponentInParent<AbstractLivingEntity>();
+        if (other.CompareTag("DamageProvider"))
+        {
+            AbstractLivingEntity damager = other.GetComponentInParent<AbstractLivingEntity>();
         
-        if (damager.IsAttacking)
-            Hurt(damager.BaseDamage);
+            if (damager.IsAttacking)
+                Hurt(damager.BaseDamage);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (WithinBoundsOf.CompareTag("DialogueTriggerer"))
-        {
-            DialogueTriggerer dialogueTriggerer = WithinBoundsOf.GetComponent<DialogueTriggerer>();
-            dialogueTriggerer.StopDialogue();
-            CurrentDialogue = null;
-        }
+        withinBounds.Remove(other.gameObject);
+        // if (WithinBoundsOf.CompareTag("DialogueTriggerer"))
+        // {
+        //     DialogueTriggerer dialogueTriggerer = WithinBoundsOf.GetComponent<DialogueTriggerer>();
+        //     dialogueTriggerer.StopDialogue();
+        //     CurrentDialogue = null;
+        // }
     }
 
     /* ***************** */

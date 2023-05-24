@@ -39,7 +39,8 @@ public class StoneGuardian : AbstractBoss
 
     public override void Kill()
     {
-        IsVulnerable = false;
         animator.SetTrigger(deathTrigger);
+        IsVulnerable = false;
+        GameManager.Instance.Annihilate(go => go.CompareTag("Corruption"));
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +12,22 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
     [SerializeField] private float waitWithinLetter;
-    [SerializeField] private TMP_Text textBox;
+    
     [SerializeField] private Animator dialogueBox;
+    [SerializeField] private Animator buttonAnimator;
+    
+    [SerializeField] private TMP_Text textBox;
+    [SerializeField] private Image nextBtn;
+    
+    private float floating;
+    public Queue<string> Sentences { get; set; }
+    private string CurrentSentence { get; set; }
+    
+    private Dialogue CurrentDialogue { get; set; }
+    
+    public bool IsDialoguePlaying { get; private set; }
+    public bool HasFinishedSentence { get; private set; }
+    private Player Interactor { get; set; }
     
     private void Awake()
     {
@@ -24,39 +39,87 @@ public class DialogueManager : MonoBehaviour
         else
             throw new ApplicationException("Il y a plus d'un <DialogueManager>");
     }
-
-    public Queue<string> Sentences { get; set; }
+    
     private void Start() => Sentences = new Queue<string>();
-
-    public void StartDialogue(Dialogue dialogue)
+    
+    public void Trigger(Dialogue dialogue, Player interactor)
     {
-        dialogue.IsActive = true;
+        if (!IsDialoguePlaying) // commence le dialogue
+        {
+            CurrentDialogue = dialogue;
+            Interactor = interactor;
+            StartDialogue(dialogue);
+        }
+        else if (!HasFinishedSentence)
+            ForceSentence();
+        else
+            NextSentence();
+    }
+    
+    private void StartDialogue(Dialogue dialogue)
+    {
+        IsDialoguePlaying = true;
+        Interactor.CanMove = false;
+        
+        dialogueBox.ResetTrigger("Out");
         dialogueBox.SetTrigger("In");
         
         Sentences.Clear();
         foreach (string sentence in dialogue.GetLines()) 
             Sentences.Enqueue(sentence);
         
-        NextSentence(dialogue);
+        NextSentence();
     }
-
-    public void NextSentence(Dialogue dialogue)
+    
+    private void NextSentence()
     {
         if (Sentences.Count == 0)
         {
-            StopDialogue(dialogue);
+            StopCurrentDialogue();
             return;
         }
         
+        CurrentSentence = Sentences.Dequeue();
+        
         StopAllCoroutines();
-        StartCoroutine(TextAnimation(Sentences.Dequeue(), waitWithinLetter));
-    }
 
-    public void StopDialogue(Dialogue dialogue)
-    {
-        dialogue.IsActive = false;
-        dialogueBox.SetTrigger("Out");
+        HasFinishedSentence = false;
+        
+        StartCoroutine(TextAnimation(CurrentSentence, waitWithinLetter));
+        StartCoroutine(Speech(CurrentDialogue.GetVoice(), CurrentDialogue.GetVoiceInterval()));
     }
+    
+    private void ForceSentence()
+    {
+        StopAllCoroutines();
+        textBox.text = CurrentSentence;
+        HasFinishedSentence = true;
+        // buttonAnimator.SetTrigger("Appear");
+    }
+    
+    public void StopCurrentDialogue()
+    {
+        IsDialoguePlaying = false;
+        HasFinishedSentence = false;
+        Interactor.CanMove = true;
+        
+        dialogueBox.ResetTrigger("In");
+        dialogueBox.SetTrigger("Out");
+        
+        // buttonAnimator.ResetTrigger("Appear");
+        // buttonAnimator.ResetTrigger("Clicked");
+    }
+    
+    /* VFXs */
+    
+    // private void Update()
+    // {
+    //     if (HasFinishedSentence)
+    //     {
+    //         SetAlpha(nextBtn, Mathf.Sin(floating));
+    //         floating = (floating + Time.deltaTime) % 360;
+    //     }
+    // }
     
     IEnumerator TextAnimation(string sentence, float waitInSec)
     {
@@ -66,5 +129,36 @@ public class DialogueManager : MonoBehaviour
             textBox.text += c;
             yield return new WaitForSeconds(waitInSec);
         }
+    
+        yield return null;
+        HasFinishedSentence = true;
+        // StartCoroutine(FloatAnimation(4f));
     }
+    
+    IEnumerator Speech(AudioSource voice, float interval)
+    {
+        while (!HasFinishedSentence)
+        {
+            voice.Play();
+            yield return new WaitForSeconds(interval);
+        }
+    }
+    
+    // IEnumerator FloatAnimation(float speed)
+    // {
+    //     float s = 0f;
+    //     while (HasFinishedSentence)
+    //     {
+    //         SetAlpha(nextBtn, Mathf.Sin(s) + 0.5f);
+    //         s += Time.deltaTime * speed;
+    //         yield return null;
+    //     }
+    // }
+    
+    // private void SetAlpha(Image image, float alpha)
+    // {
+    //     Color c = image.color;
+    //     c.a = alpha;
+    //     image.color = c;
+    // }
 }

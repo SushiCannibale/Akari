@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
             IsPaused = false;
             
             SceneManager.LoadScene(firstScene);
-        } 
+        }
         else
             throw new ApplicationException("Il y a plus d'un <GameManager> !");
     }
