@@ -121,8 +121,8 @@ public class Player : AbstractLivingEntity
 
     public override void Kill()
     {
-        SceneManager.LoadScene(GameUtils.Scenes.MainTitle);
         transform.position = new Vector3(-1, 1, 4);
+        SceneManager.LoadScene(GameUtils.Scenes.MainTitle);
     }
 
     
