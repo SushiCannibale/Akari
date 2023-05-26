@@ -10,68 +10,93 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     
-    [SerializeField] private Player playerPrefab;
-    [SerializeField] private PlayerCamera playerCamPrefab;
-    [SerializeField] private PlayerLight playerLightPrefab;
+    [Header("File storage config")]
+    [SerializeField] private string fileName;
+    [SerializeField] private bool createDataIfNull;
 
-    [SerializeField] private string gameSceneName;
-    [SerializeField] private string firstScene;
-
-    public bool IsPlaying { get; private set; }
-    public bool IsPaused { get; private set; }
+    public GameData data { get; private set; }
+    private List<IPersistentData> persistentDataObjects;
+    private FileDataHandler handler;
     
-    public Player Player { get; private set; }
-    public PlayerCamera PlayerCamera { get; private set; }
-    public PlayerLight PlayerLight { get; private set; }
     void Awake()
     {
-        if (Instance is null)
+        if (Instance != null)
         {
-            Instance = this;
-            DontDestroyOnLoad(Instance);
-            
-            IsPlaying = false;
-            IsPaused = false;
-            
-            SceneManager.LoadScene(firstScene);
+            Debug.LogError("Il y a plus d'un GameManager dans la scène, il a été grand remplacé !");
+            Destroy(gameObject);
+            return;
         }
-        else
-            throw new ApplicationException("Il y a plus d'un <GameManager> !");
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        handler = new FileDataHandler(Application.persistentDataPath, fileName);
     }
 
-    public void Pause(bool f) => IsPaused = f;
-
-    public void NewGame()
+    private void OnEnable()
     {
-        SceneManager.LoadScene(gameSceneName);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-        Player = Instantiate(playerPrefab);
-        PlayerCamera = Instantiate(playerCamPrefab).GetComponent<PlayerCamera>();
-        PlayerLight = Instantiate(playerLightPrefab).GetComponent<PlayerLight>();
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        persistentDataObjects = FindObjectsOfType<MonoBehaviour>().OfType<IPersistentData>().ToList();
+        LoadData();
+    }
+
+    public void CreateData()
+    {
+        data = new GameData();
+    }
+    
+    public void LoadData()
+    {
+        // load from the file
+        data = handler.Load();
+
+        if (data == null && createDataIfNull)
+        {
+            CreateData();
+        }
+
+        if (data == null)
+            Debug.LogError("No data could be found !");
         
-        PlayerCamera.SetTarget(Player.transform);
-        PlayerLight.SetOwner(Player);
+        // Push the GameData to other scripts to load from
+        persistentDataObjects.ForEach(obj => obj.LoadFrom(data));
+    }
+
+    public void SaveData()
+    {
+        if (data == null)
+        {
+            Debug.LogError("No data was found.");
+            return;
+        }
         
-        IsPlaying = true;
-        IsPaused = false;
+        // Push the GameData to other scripts to save on
+        persistentDataObjects.ForEach(obj => obj.SaveTo(data));
+        
+        // Save data to file
+        data.scene = SceneManager.GetActiveScene().name;
+        handler.Save(data);
     }
 
-    public void Quit()
+    private void OnApplicationQuit()
     {
-        IsPlaying = false;
-        Application.Quit();
+        SaveData();
     }
 
-    public void LoadGame()
+    public void SaveAndLoadAsync(string scene, LoadSceneMode mode)
     {
-        IsPlaying = true;
-        IsPaused = false;
-        // TODO : Charger la save
+        SaveData();
+        SceneManager.LoadSceneAsync(scene, mode);
     }
 
-    public void Annihilate(Predicate<GameObject> p)
-    {
-        foreach(GameObject gameobject in SceneManager.GetActiveScene().GetRootGameObjects().Where(go => p(go)))
-            Destroy(gameobject);
-    }
+    // public bool HasGameData() => data != null;
 }

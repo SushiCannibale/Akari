@@ -19,7 +19,7 @@ public class LevelTriggerer : MonoBehaviour
             if (gameObject.CompareTag("AnimatedPortal"))
                 LoadSceneAnimated(toScene);
             else
-                SceneManager.LoadScene(toScene);
+                GameManager.Instance.SaveAndLoadAsync(toScene, LoadSceneMode.Single);
         }
     }
     
@@ -34,7 +34,7 @@ public class LevelTriggerer : MonoBehaviour
         animator.SetTrigger("In");
         yield return new WaitForSeconds(waitTime);
         
-        SceneManager.LoadScene(scene);
+        GameManager.Instance.SaveAndLoadAsync(scene, LoadSceneMode.Single);
         
         animator.SetTrigger("Out");
         yield return new WaitForSeconds(waitTime);

@@ -34,17 +34,23 @@ public abstract class AbstractLivingEntity : MonoBehaviour
         if (IsAlive() && IsVulnerable)
         {
             StartInvulnerability(MaxInvulnerableTime, BlinkInterval, BlinkTimes);
-            Health -= amount;
             HurtSound.Play();
             
             if (Health - amount <= 0)
             {
-                Kill();   
+                Kill();
+                return;
             }
+            
+            Health -= amount;
+            
         }
     }
 
-    public abstract void Kill();
+    public virtual void Kill()
+    {
+        Health = 0f;
+    }
 
     IEnumerator HurtBlink(Renderer renderer, float blinkInterval, int blinkTimes)
     {

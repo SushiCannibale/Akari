@@ -5,9 +5,12 @@ using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
-public class Player : AbstractLivingEntity
+public class Player : AbstractLivingEntity, IPersistentData
 {
+    [SerializeField] private PlayerCamera playerCam;
+
     public Vector3 hitOffset;
     public float hitRange = 0.5f;
     public LayerMask hitLayer;
@@ -25,24 +28,18 @@ public class Player : AbstractLivingEntity
     private List<GameObject> withinBounds;
 
     public int coins;
-    protected void Awake()
+    
+    private void Awake()
     {
-        DontDestroyOnLoad(this);
         Initialize(true);
         controller = GetComponent<CharacterController>();
-    }
-
-    private void Start()
-    {
         sword = GetComponentInChildren<Sword>();
         withinBounds = new List<GameObject>();
     }
 
     protected void Update()
     {
-        // CanMove = CurrentDialogue != null && !CurrentDialogue.IsActive;
-
-        Transform camT = GameManager.Instance.PlayerCamera.transform;
+        Transform camT = playerCam.transform;
         Vector3 fwd = camT.forward;
         Vector3 side = camT.right;
 
@@ -57,16 +54,16 @@ public class Player : AbstractLivingEntity
         if (Input.GetButtonDown("Fire1"))
             HandleAttack();
 
-        if (Input.GetKeyDown(GameUtils.Keys.INSTAKILL))
+        if (Input.GetKeyDown(Util.Keys.INSTAKILL))
             HandleInstaKill();
         
         HandleMove(ref yDir);
 
-        if (Input.GetKeyDown(GameUtils.Keys.INTERACT))
+        if (Input.GetKeyDown(Util.Keys.INTERACT))
         {
             if (withinBounds.Count == 0)
                 return;
-            Interact(GameUtils.Math.CloserTo(withinBounds, gameObject));
+            Interact(Util.Math.CloserTo(withinBounds, gameObject));
         }
 
         if (CanMove)
@@ -135,13 +132,11 @@ public class Player : AbstractLivingEntity
 
     public override void Kill()
     {
-        transform.position = new Vector3(-1, 1, 4);
-        SceneManager.LoadScene(GameUtils.Scenes.MainTitle);
+        // transform.position = new Vector3(-1, 1, 4);
+        // SceneManager.LoadScene(Util.Scenes.MainTitle);
     }
 
     
-    /* Event's Related */
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactible"))
@@ -162,28 +157,24 @@ public class Player : AbstractLivingEntity
         {
             triggerer.TriggerBossFight(this);
         }
-
-        // if (other.CompareTag("DamageProvider"))
-        // {
-        //     AbstractLivingEntity damager = other.GetComponentInParent<AbstractLivingEntity>();
-        //
-        //     if (damager.IsAttacking)
-        //         Hurt(damager.BaseDamage);
-        // }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Interactible"))
             withinBounds.Remove(other.gameObject);
-        
-        // if (WithinBoundsOf.CompareTag("DialogueTriggerer"))
-        // {
-        //     DialogueTriggerer dialogueTriggerer = WithinBoundsOf.GetComponent<DialogueTriggerer>();
-        //     dialogueTriggerer.StopDialogue();
-        //     CurrentDialogue = null;
-        // }
     }
 
-    /* ***************** */
+    /* Called before the first frame when scene loaded ! */
+    public void LoadFrom(GameData data)
+    {
+        controller.enabled = false;
+        controller.transform.position = data.playerPosition;
+        controller.enabled = true;
+    }
+
+    public void SaveTo(GameData data)
+    {
+        data.playerPosition = controller.transform.position;
+    }
 }

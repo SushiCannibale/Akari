@@ -1,23 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Tutorials.Core.Editor;
 using UnityEngine;
 
-public class PlayerCamera : MonoBehaviour
+public class PlayerCamera : MonoBehaviour, IPersistentData
 {
-    public Transform target;
-    public float smoothness = 10.0f;
+    [SerializeField] Transform target;
+    [SerializeField] private float smoothness = 10.0f;
     public Vector3 offset;
-
-    void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }
-
-    public void SetTarget(Transform transform) => target = transform;
+    
     private void LateUpdate()
     {
-        if (target == null)
+        if (target is null)
             return;
         
         Vector3 finalposition = target.position + offset;
@@ -25,6 +20,16 @@ public class PlayerCamera : MonoBehaviour
         transform.position = smoothed;
         
         transform.LookAt(target);
+    }
+
+    public void LoadFrom(GameData data)
+    {
+        offset = data.camOffset;
+    }
+
+    public void SaveTo(GameData data)
+    {
+        data.camOffset = offset;
     }
 }
 

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Canvas : MonoBehaviour
 {
-    public static Canvas Instance;
-    private void Awake()
+    public static Canvas Instance { get; private set; }
+    void Awake()
     {
-        if (Instance is null)
+        if (Instance != null)
         {
-            Instance = this;
-            DontDestroyOnLoad(Instance);
+            Debug.LogError("Il y a déjà un Canvas dans la scène, il a été grand remplacé");
+            Destroy(gameObject);
+            return;
         }
-        else
-            throw new ApplicationException("Il y a plus d'un <Canvas>");
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameUtils
+public class Util
 {
     public static void PauseGameState(bool flag) => Time.timeScale = flag ? 0f : 1f;
     
@@ -10,6 +10,7 @@ public class GameUtils
         public static string Bootstrap = "Bootstrap";
         public static string MainTitle = "MainTitle";
         public static string BossRush = "BossRush";
+        public static string FirstGameScene = "Plaines01";
     }
 
     public static class Keys

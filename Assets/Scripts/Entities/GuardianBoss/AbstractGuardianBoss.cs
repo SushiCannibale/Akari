@@ -15,7 +15,7 @@ public abstract class AbstractGuardianBoss : AbstractLivingEntity
     [SerializeField] protected List<string> attacks;
     public Player Target { get; protected set; }
 
-    private void Start()
+    private void Awake()
     {
         Initialize(false);
     }
@@ -29,9 +29,11 @@ public abstract class AbstractGuardianBoss : AbstractLivingEntity
 
     public override void Kill()
     {
+        base.Kill();
         animator.SetTrigger("Death");
         IsVulnerable = false;
-        GameManager.Instance.Annihilate(go => go.CompareTag("Corruption"));
+        GameManager.Instance.SaveData();
+        // GameManager.Instance.Annihilate(go => go.CompareTag("Corruption"));
     }
     
     public string ChooseNextAttack()

@@ -6,7 +6,7 @@ public class MultiMenu : MenuBase
     public void Host()
     {
         NetworkManager.Singleton.StartHost();
-        NetworkManager.Singleton.SceneManager.LoadScene(GameUtils.Scenes.BossRush, LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(Util.Scenes.BossRush, LoadSceneMode.Single);
     }
 
     public void Server()
@@ -17,6 +17,6 @@ public class MultiMenu : MenuBase
     public void Client()
     {
         NetworkManager.Singleton.StartClient();
-        NetworkManager.Singleton.SceneManager.LoadScene(GameUtils.Scenes.BossRush, LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(Util.Scenes.BossRush, LoadSceneMode.Single);
     }
 }

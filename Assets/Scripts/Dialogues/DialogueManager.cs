@@ -10,14 +10,28 @@ using UnityEngine.UI;
  Le dialogue est récupéré par le DialogueTriggerer du gameobject à qui on parle. */
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager Instance;
+    public static DialogueManager Instance { get; private set; }
+    
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Il y a déjà un DialogueManager dans la scène, il a été grand remplacé");
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     [SerializeField] private float waitWithinLetter;
     
     [SerializeField] private Animator dialogueBox;
-    [SerializeField] private Animator buttonAnimator;
+    // [SerializeField] private Animator buttonAnimator;
     
     [SerializeField] private TMP_Text textBox;
-    [SerializeField] private Image nextBtn;
+    // [SerializeField] private Image nextBtn;
     
     private float floating;
     public Queue<string> Sentences { get; set; }
@@ -28,18 +42,7 @@ public class DialogueManager : MonoBehaviour
     public bool IsDialoguePlaying { get; private set; }
     public bool HasFinishedSentence { get; private set; }
     private Player Interactor { get; set; }
-    
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(Instance);
-        }
-        else
-            throw new ApplicationException("Il y a plus d'un <DialogueManager>");
-    }
-    
+
     private void Start() => Sentences = new Queue<string>();
     
     public void Trigger(Dialogue dialogue, Player interactor)
