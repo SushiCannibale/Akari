@@ -7,11 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : AbstractLivingEntity
-{ 
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float baseDamage;
-    [SerializeField] private float speed;
-    
+{
     public Vector3 hitOffset;
     public float hitRange = 0.5f;
     public LayerMask hitLayer;
@@ -27,10 +23,12 @@ public class Player : AbstractLivingEntity
     private Sword sword;
     
     private List<GameObject> withinBounds;
+
+    public int coins;
     protected void Awake()
     {
         DontDestroyOnLoad(this);
-        Initialize(maxHealth, speed, baseDamage, true);
+        Initialize(true);
         controller = GetComponent<CharacterController>();
     }
 
@@ -58,6 +56,9 @@ public class Player : AbstractLivingEntity
         
         if (Input.GetButtonDown("Fire1"))
             HandleAttack();
+
+        if (Input.GetKeyDown(GameUtils.Keys.INSTAKILL))
+            HandleInstaKill();
         
         HandleMove(ref yDir);
 
@@ -113,6 +114,19 @@ public class Player : AbstractLivingEntity
         }
     }
 
+    private void HandleInstaKill()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position + hitOffset, hitRange, hitLayer);
+        
+        foreach (Collider coll in hits)
+        {
+            if (coll.gameObject.TryGetComponent(out IDamageable hitable))
+            {
+                hitable.Hurt(float.MaxValue);
+            }
+        }
+    }
+
     private void Interact(GameObject gameObject)
     {
         if (gameObject.TryGetComponent(out IInteractible clickable))
@@ -130,20 +144,39 @@ public class Player : AbstractLivingEntity
 
     private void OnTriggerEnter(Collider other)
     {
-        withinBounds.Add(other.gameObject);
+        if (other.CompareTag("Interactible"))
+            withinBounds.Add(other.gameObject);
 
-        if (other.CompareTag("DamageProvider"))
+        if (other.gameObject.TryGetComponent(out ICollectible collectible))
         {
-            AbstractLivingEntity damager = other.GetComponentInParent<AbstractLivingEntity>();
-        
-            if (damager.IsAttacking)
-                Hurt(damager.BaseDamage);
+            collectible.Collect(this);
         }
+
+        if (other.gameObject.TryGetComponent(out IDamageProvider dmgProvider))
+        {
+            if (dmgProvider.IsLethal())
+                Hurt(dmgProvider.DamageAmount());
+        }
+
+        if (other.gameObject.TryGetComponent(out IBossFightTriggerer triggerer))
+        {
+            triggerer.TriggerBossFight(this);
+        }
+
+        // if (other.CompareTag("DamageProvider"))
+        // {
+        //     AbstractLivingEntity damager = other.GetComponentInParent<AbstractLivingEntity>();
+        //
+        //     if (damager.IsAttacking)
+        //         Hurt(damager.BaseDamage);
+        // }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        withinBounds.Remove(other.gameObject);
+        if (other.CompareTag("Interactible"))
+            withinBounds.Remove(other.gameObject);
+        
         // if (WithinBoundsOf.CompareTag("DialogueTriggerer"))
         // {
         //     DialogueTriggerer dialogueTriggerer = WithinBoundsOf.GetComponent<DialogueTriggerer>();

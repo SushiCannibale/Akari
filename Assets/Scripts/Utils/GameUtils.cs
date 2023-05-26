@@ -15,6 +15,7 @@ public class GameUtils
     public static class Keys
     {
         public static KeyCode INTERACT = KeyCode.E;
+        public static KeyCode INSTAKILL = KeyCode.K;
     }
 
     public static class Layers

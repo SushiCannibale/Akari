@@ -1,10 +1,10 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class Canvas : MonoBehaviour
 {
     public static Canvas Instance;
-
     private void Awake()
     {
         if (Instance is null)

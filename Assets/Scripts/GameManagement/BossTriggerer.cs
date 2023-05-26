@@ -2,15 +2,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class BossTriggerer : MonoBehaviour
+public class BossTriggerer : MonoBehaviour, IBossFightTriggerer
 {
-    [SerializeField] private AbstractBoss boss;
-    private void OnTriggerEnter(Collider other)
+    [SerializeField] private AbstractGuardianBoss boss;
+
+    public void TriggerBossFight(Player player)
     {
-        if (other.TryGetComponent<Player>(out Player player))
-        {
-            boss.StartFight(player);
-            Destroy(gameObject);
-        }
+        boss.StartFight(player);
+        Destroy(gameObject);
     }
 }

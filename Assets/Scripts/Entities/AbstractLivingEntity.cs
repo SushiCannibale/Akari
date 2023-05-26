@@ -4,25 +4,25 @@ using UnityEngine;
 
 public abstract class AbstractLivingEntity : MonoBehaviour
 {
-    [SerializeField] protected float maxInvulnerableTime;
-    [SerializeField] protected float blinkInterval;
-    [SerializeField] protected int blinkTimes;
+    [SerializeField] protected EntityData data;
+    [SerializeField] protected AudioSource HurtSound;
     
-    public float MaxHealth { get; set; }
+    public float MaxHealth => data.maxHealth;
+    public float MaxInvulnerableTime => data.maxInvulnerableTime;
+    public float Speed => data.speed;
+    public float BaseDamage => data.baseDamage;
+    public float BlinkInterval => data.blinkInterval;
+    public int BlinkTimes => data.blinkTimes;
+    
     public float Health { get; protected set; }
-    public float Speed { get; protected set; }
-    public float BaseDamage { get; protected set; }
-    public bool IsAttacking { get; protected set; }
+    public bool IsAttacking { get; set; }
     public bool IsVulnerable { get; set; }
-    
     public bool CanMove { get; set; }
 
-    public void Initialize(float maxHealth, float speed, float baseDamage, bool vulnerable)
+    public void Initialize(bool vulnerable)
     {
-        MaxHealth = maxHealth;
-        Health = maxHealth;
-        Speed = speed;
-        BaseDamage = baseDamage;
+        Health = MaxHealth;
+        IsAttacking = false;
         IsVulnerable = vulnerable;
         CanMove = true;
     }
@@ -31,15 +31,17 @@ public abstract class AbstractLivingEntity : MonoBehaviour
 
     public void Hurt(float amount)
     {
-        if (IsVulnerable)
+        if (IsAlive() && IsVulnerable)
         {
-            // Jouer un son de dégât
-            StartInvulnerability(maxInvulnerableTime, blinkInterval, blinkTimes);
+            StartInvulnerability(MaxInvulnerableTime, BlinkInterval, BlinkTimes);
             Health -= amount;
+            HurtSound.Play();
+            
+            if (Health - amount <= 0)
+            {
+                Kill();   
+            }
         }
-        
-        if (!IsAlive()) 
-            Kill();
     }
 
     public abstract void Kill();
