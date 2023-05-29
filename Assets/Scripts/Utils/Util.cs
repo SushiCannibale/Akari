@@ -5,12 +5,12 @@ using UnityEngine;
 public class Util
 {
     public static void PauseGameState(bool flag) => Time.timeScale = flag ? 0f : 1f;
-    
+
     public static class Scenes {
-        public static string Bootstrap = "Bootstrap";
         public static string MainTitle = "MainTitle";
         public static string BossRush = "BossRush";
         public static string FirstGameScene = "Plaines01";
+        public static string GameOver = "GameOver";
     }
 
     public static class Keys

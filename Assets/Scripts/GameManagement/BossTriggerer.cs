@@ -8,7 +8,8 @@ public class BossTriggerer : MonoBehaviour, IBossFightTriggerer
 
     public void TriggerBossFight(Player player)
     {
-        boss.StartFight(player);
+        if (boss.IsAlive())
+            boss.StartFight(player);
         Destroy(gameObject);
     }
 }

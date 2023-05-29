@@ -18,4 +18,3 @@ MonoBehaviour:
   speed: 2
   baseDamage: 1
   maxInvulnerableTime: 1
-  hurtSound: {fileID: 0}

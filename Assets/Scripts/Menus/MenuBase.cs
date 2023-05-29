@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class MenuBase : MonoBehaviour
 {
-    public MenuBase previousMenu;
-    // public void Quit() => GameManager.Instance.Quit();
+    private MenuBase previousMenu;
+    public void Quit() => Application.Quit();
     public void NextMenu(MenuBase to)
     {
         to.previousMenu = this;

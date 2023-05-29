@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class Player : AbstractLivingEntity, IPersistentData
 {
@@ -132,8 +127,10 @@ public class Player : AbstractLivingEntity, IPersistentData
 
     public override void Kill()
     {
-        // transform.position = new Vector3(-1, 1, 4);
-        // SceneManager.LoadScene(Util.Scenes.MainTitle);
+        // TODO - Check if the last save is being loaded when performing death
+        base.Kill();
+        SceneManager.LoadSceneAsync(Util.Scenes.GameOver, LoadSceneMode.Single);
+        // GameManager.Instance.SaveAndLoadAsync(Util.Scenes.GameOver, LoadSceneMode.Single);
     }
 
     

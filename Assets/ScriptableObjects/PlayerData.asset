@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blinkInterval: 0.1
   blinkTimes: 4
-  maxHealth: 20
+  maxHealth: 5
   speed: 4
   baseDamage: 1
   maxInvulnerableTime: 10
-  hurtSound: {fileID: 0}

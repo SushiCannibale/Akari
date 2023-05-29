@@ -45,3 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fileName: data.json
+  createDataIfNull: 0
+  dontSaveScenes:
+  - MainTitle
+  - GameOver
+  - Whitespace
+  - BossRush

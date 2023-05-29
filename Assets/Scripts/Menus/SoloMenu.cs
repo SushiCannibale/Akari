@@ -7,12 +7,13 @@ public class SoloMenu : MenuBase
     public void NewGame()
     {
         GameManager.Instance.CreateData();
-        GameManager.Instance.SaveAndLoadAsync(startingScene, LoadSceneMode.Single);
+        FindObjectOfType<SceneTransition>().TransitionTo(startingScene);
+        GameManager.Instance.SaveData();
     }
 
     public void Continue()
     {
         GameManager.Instance.LoadData();
-        GameManager.Instance.SaveAndLoadAsync(GameManager.Instance.data.scene, LoadSceneMode.Single);
+        FindObjectOfType<SceneTransition>().TransitionTo(GameManager.Instance.data.scene);
     }
 }

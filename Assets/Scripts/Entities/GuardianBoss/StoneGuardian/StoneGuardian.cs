@@ -8,11 +8,20 @@ public class StoneGuardian : AbstractGuardianBoss, IPersistentData
 {
     public void LoadFrom(GameData data)
     {
-        Health = data.stoneGuardianDead ? MaxHealth : 0f;
+        Health = data.stoneGuardianData.isDead ? 0f : MaxHealth;
+        transform.position = data.stoneGuardianData.position;
+
+        if (data.stoneGuardianData.isDead)
+        {
+            animator.SetTrigger("Death");
+            relatedCorruption.ForEach(obj => Destroy(obj));
+        }
+            
     }
 
     public void SaveTo(GameData data)
     {
-        data.stoneGuardianDead = !IsAlive();
+        data.stoneGuardianData.position = transform.position;
+        data.stoneGuardianData.isDead = !IsAlive();
     }
 }

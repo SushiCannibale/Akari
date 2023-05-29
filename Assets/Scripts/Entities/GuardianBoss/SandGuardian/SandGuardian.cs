@@ -7,11 +7,19 @@ public class SandGuardian : AbstractGuardianBoss, IPersistentData
     
     public void LoadFrom(GameData data)
     {
-        Health = data.sandGuardianDead ? MaxHealth : 0f;
+        Health = data.sandGuardianData.isDead ? 0f : MaxHealth;
+        transform.position = data.sandGuardianData.position;
+        
+        if (data.sandGuardianData.isDead)
+        {
+            animator.SetTrigger("Death");
+            relatedCorruption.ForEach(obj => Destroy(obj));
+        }
     }
 
     public void SaveTo(GameData data)
     {
-        data.sandGuardianDead = Health > 0;
+        data.sandGuardianData.position = transform.position;
+        data.sandGuardianData.isDead = !IsAlive();
     }
 }

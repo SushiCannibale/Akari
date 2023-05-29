@@ -14,9 +14,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string fileName;
     [SerializeField] private bool createDataIfNull;
 
+    [SerializeField] private List<string> dontSaveScenes;
+
     public GameData data { get; private set; }
     private List<IPersistentData> persistentDataObjects;
     private FileDataHandler handler;
+    
+    public bool IsGamePaused { get; set; }
     
     void Awake()
     {
@@ -83,7 +87,10 @@ public class GameManager : MonoBehaviour
         persistentDataObjects.ForEach(obj => obj.SaveTo(data));
         
         // Save data to file
-        data.scene = SceneManager.GetActiveScene().name;
+        string currScene = SceneManager.GetActiveScene().name;
+        if (!dontSaveScenes.Contains(currScene))
+            data.scene = currScene;
+        
         handler.Save(data);
     }
 

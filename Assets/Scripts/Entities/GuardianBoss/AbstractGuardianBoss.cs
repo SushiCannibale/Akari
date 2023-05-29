@@ -1,8 +1,6 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public abstract class AbstractGuardianBoss : AbstractLivingEntity
 {
@@ -13,6 +11,9 @@ public abstract class AbstractGuardianBoss : AbstractLivingEntity
     [SerializeField] private AudioSource emergeSound;
 
     [SerializeField] protected List<string> attacks;
+    [SerializeField] protected List<GameObject> relatedCorruption;
+
+    private int debgAttkIndex;
     public Player Target { get; protected set; }
 
     private void Awake()
@@ -25,6 +26,7 @@ public abstract class AbstractGuardianBoss : AbstractLivingEntity
         emergeSound.Play();
         Target = player;
         animator.SetTrigger("Awake");
+        debgAttkIndex = 0;
     }
 
     public override void Kill()
@@ -33,13 +35,42 @@ public abstract class AbstractGuardianBoss : AbstractLivingEntity
         animator.SetTrigger("Death");
         IsVulnerable = false;
         GameManager.Instance.SaveData();
-        // GameManager.Instance.Annihilate(go => go.CompareTag("Corruption"));
+        relatedCorruption.ForEach(obj => Destroy(obj));
+        // StartCoroutine(FadeCorruption());
     }
-    
+
+    // IEnumerator FadeCorruption()
+    // {
+    //     float alpha = 1f;
+    //     while (alpha > 0)
+    //     {
+    //         alpha -= Time.deltaTime;
+    //         relatedCorruption.ForEach(obj =>
+    //         {
+    //             foreach (var renderer in obj.GetComponentsInChildren<Renderer>())
+    //             {
+    //                 Color color = renderer.material.color;
+    //                 renderer.material.color = new Color(color.r, color.g, color.b, alpha);
+    //             }
+    //                 
+    //         });
+    //         yield return null;
+    //     }
+    //     
+    //     relatedCorruption.ForEach(obj => Destroy(obj));
+    // }
+
     public string ChooseNextAttack()
     {
-        return attacks[Random.Range(0, attacks.Count)];
+        string s = attacks[debgAttkIndex];
+        debgAttkIndex = (debgAttkIndex + 1) % attacks.Count;
+        return s;
     }
+    
+    // public string ChooseNextAttack()
+    // {
+    //     return attacks[Random.Range(0, attacks.Count)];
+    // }
 
     // public Player FindNearestPlayer(float minDist, float maxDist)
     // {

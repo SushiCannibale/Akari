@@ -9,14 +9,14 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Pause(!GameManager.Instance.IsPaused);
+            Pause(!GameManager.Instance.IsGamePaused);
         }
     }
 
     /* Aussi bind à un bouton */
     public void Pause(bool flag)
     {
-        // GameManager.Instance.Pause(flag);
+        GameManager.Instance.IsGamePaused = flag;
         Util.PauseGameState(flag);
         holder.SetActive(flag);
     }
@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
     /* Bind à un bouton */
     public void MainTitle()
     {
-        // GameManager.Instance.Annihilate(g => g.name != "GameManager");
-        SceneManager.LoadScene(Util.Scenes.MainTitle);
+        Pause(false);
+        GameManager.Instance.SaveAndLoadAsync(Util.Scenes.MainTitle, LoadSceneMode.Single);
     }
 }
