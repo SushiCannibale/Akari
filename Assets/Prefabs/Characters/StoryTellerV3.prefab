@@ -440,9 +440,10 @@ GameObject:
   - component: {fileID: 1640827658039280565}
   - component: {fileID: 7921718969955354405}
   - component: {fileID: 2483885671418670221}
+  - component: {fileID: 1859111744}
   m_Layer: 0
   m_Name: StoryTellerV3
-  m_TagString: DialogueTriggerer
+  m_TagString: Interactible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,8 +483,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dialogue:
-    Lines: []
-  voice: {fileID: 0}
+    Lines:
+    - Hmmmm.... Que pouvons nous faire...
+    - Desole je pensais a voix haute
+    - Tiens, mais qui est-tu ?
+    - Un envoye des dieux tu dis ? Oui, bien sur, et moi je suis le pere noel !
+    - Quoiqu'il en soit, je suis bien oblige de te croire
+    - Un oiseau qui parle et qui possede une arme blanche, c'est pas tres commun...
+    - Notre merveilleues contree a ete souillee par la corruption du roi golem qui
+      se terre en  ces lieux.
+    - Si tu est bien ce que tu pretends etre, tu dois etre notre sauveur !
+    - Enfin bref, voici l'heure a laquelle je te presente les controles pour que
+      tu apprennes a te deplacer.
+    - Tu sais bien, le tutoriel, tout ca tout ca
+    - Oui car nous sommes dans un jeu video en fait... Rien de tout ca n'est reel
+      tu saisi ?
+    - Bon, revenons-en a nos moutons.
+    - Alors, 'ZQSD' pour se deplacer, 'E' pour interagir, et clic gauche pour donner
+      un coup.
+    - Oui bon bah le developpeur manquait d'originalite mais ca ne vas pas t'empecher
+      de sauver le monde, si ?
+    - Allez, bon vent, va sauver la princesse ! Ah non attends, mauvaise license...
+    - Va detruire le roi golem !
+    Voice: {fileID: 1859111744}
+    VoiceInterval: 0.08
 --- !u!65 &2483885671418670221
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -497,6 +520,102 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5173303, y: 1.175265, z: 1.4438243}
   m_Center: {x: 0.01412636, y: 0.58633405, z: -0.22191215}
+--- !u!82 &1859111744
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129838286596806927}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3f2d5fdfc7c283d4baefc30580c8297f, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2312978387021298913
 GameObject:
   m_ObjectHideFlags: 0
